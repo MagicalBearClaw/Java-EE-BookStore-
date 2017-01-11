@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- Author: Andrew -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <!--sales_title = Sales Reports
+sales_total = Total Sales
+sales_sellers = Best Sellers
+sales_clients = Best Clients
+sales_author = Author Report
+sales_clitn = Client Report
+sales_select = Select:
+sales_date1 = Start Date
+sales_date2 = End Date
+sales_submit = submit
+sales_name = Name
+sales_date = Date
+sales_count = count
+sales_total = Total Price-->
+
+    <ui:composition template="/template/management.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.sales_title}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form>
+                <p:messages autoUpdate="true" />
+                <h:message for="radio" style="color:red" />
+                <p:selectOneRadio id="radio" value="#{sales.reportType}" required="true">
+                    <f:selectItem itemLabel="#{bundle.sales_total}" itemValue="book" />
+                    <f:selectItem itemLabel="#{bundle.sales_sellers}" itemValue="sellers" />
+                    <f:selectItem itemLabel="#{bundle.sales_clients}" itemValue="clients" />
+                    <f:selectItem itemLabel="#{bundle.sales_author}" itemValue="author" />
+                    <f:selectItem itemLabel="#{bundle.sales_publisher}" itemValue="publisher" />
+                    <f:selectItem itemLabel="#{bundle.sales_client}" itemValue="client" />
+                    <f:ajax event="click" render="@form" listener="#{sales.handleClickEvent()}"/>
+                </p:selectOneRadio>
+                <ui:fragment id="search_frag" rendered="#{sales.visible}">
+                     <h:panelGrid columns="1"  cellpadding="5">
+                     <h:outputLabel for="report_selector" value="#{bundle.sales_select}"  />
+                <p:selectOneMenu id="report_selector" value="#{sales.reportValue}">
+                    <f:selectItems value="#{sales.itemList}"/>
+                </p:selectOneMenu>
+                     </h:panelGrid>
+                </ui:fragment>
+                <h:panelGrid columns="2"  cellpadding="10">
+                 <!--<h:outputLabel for="report_selector" value="Select:"  />
+                <h:selectOneMenu id="report_selector" value="#{sales.reportValue}">
+                    <f:selectItems value="#{sales.typesList}"/>
+                </h:selectOneMenu>-->
+                <h:outputLabel for="start_date" value="#{bundle.sales_date1}" />
+                <p:calendar id="start_date" binding="#{startDateComponent}" value="#{sales.date1}" required="true" />
+                <h:outputLabel for="end_date" value="#{bundle.sales_date2}" />
+                <p:calendar id="end_date" value="#{sales.date2}" required="true" >
+                    <f:validator validatorId="dateRangeValidator" />
+                    <f:attribute name="startDateComponent" value="#{startDateComponent}" />
+                </p:calendar>
+                </h:panelGrid>
+                <p:commandButton  actionListener="#{sales.update}" ajax="true"  type="submit" value="#{bundle.sales_submit}" update="reports_table" rendered="true" />
+            </h:form>
+            <br/>
+                  <p:dataTable id="reports_table" value="#{sales.reports}" var="item" paginator="true"
+                                 rowKey="#{item.name}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 rendered="true">
+                        <p:column headerText="#{bundle.sales_name}" style="width:1em;">
+                            <h:outputText value="#{item.type}"/>
+                        </p:column>
+                        <p:column headerText="#{bundle.sales_date}" style="width:1em;">
+                            <h:outputText value="#{item.date}"/>
+                        </p:column>
+                        <p:column headerText="#{bundle.sales_count}" style="width:1em;">
+                            <h:outputText value="#{item.count}"/>
+                        </p:column>
+                        <p:column headerText="#{bundle.sales_totalp}" style="width:1em;">
+                            <h:outputText value="$#{item.total}"/>
+                        </p:column>
+                    </p:dataTable>
+        </ui:define>
+    </ui:composition>
+</html>

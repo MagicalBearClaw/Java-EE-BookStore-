@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- Author: Philip -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template/management.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListRssfeedsTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form id="main" styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:selectOneMenu id="datalist" value="#{rssfeedsAction.enabled}" converter="#{RssfeedsActionConverter}" style="width:600px">
+                    <p:ajax listener="#{rssfeedsAction.update}" update=":main" />
+                    <f:selectItems value="#{rssfeedsAction.items}" var="feed" itemValue="#{feed}" itemLabel="#{feed.url}"/>
+                </h:selectOneMenu>
+                <br />
+                <br />
+                <p:outputLabel value="#{bundle.CreateRssfeedsLabel_url}" for="url" />
+                <br />
+                <p:inputText id="url" value="#{rssfeedsAction.current.url}" title="#{bundle.CreateRssfeedsTitle_url}" required="true" requiredMessage="#{bundle.CreateRssfeedsRequiredMessage_url}" style="width:600px" placeholder="#{bundle.CreateRssfeedsTitle_url}"/>
+                <h:outputText value=" "/>
+                <p:commandButton action="#{rssfeedsAction.create}" value="#{bundle.CreateRssfeedsSaveLink}" update=":main" icon="ui-icon-disk" />
+                <br />
+                <br />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

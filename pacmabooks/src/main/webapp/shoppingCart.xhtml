@@ -1,0 +1,151 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- Author: Alexandre, Michael -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+
+    <ui:composition template="template/main.xhtml">
+        <ui:define name="windowTitle">
+            #{bundle.Cart_Title}
+        </ui:define>
+        <ui:define name="content" rendered="#{!shoppingCart.isEmpty()}">
+            <ui:fragment rendered="#{shoppingCart.isEmpty()}">
+                <h2 class="text-center text-info">#{bundle.Cart_Request_Item}</h2>
+                <h:form>
+                    <h:commandLink action="landing.xhtml?faces-redirect=true" class="btn btn-default text-center col-sm-offset-5">
+                        <span class="glyphicon glyphicon-shopping-cart"></span> #{bundle.Cart_Continue_Shopping}
+                    </h:commandLink> 
+                </h:form>
+            </ui:fragment>
+            <ui:fragment rendered="#{!shoppingCart.isEmpty()}">
+                <div class="table-responsive">
+                    <table id="cart" class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>#{bundle.Cart_Product}</th>
+                                <th>#{bundle.Cart_Quantity}</th>
+                                <th class="text-center">#{bundle.Cart_Price}</th>
+                                <th class="text-center">Total</th>
+                                <th> </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ui:fragment rendered="#{!shoppingCart.isEmpty()}">
+                                <ui:repeat varStatus="status" value="#{shoppingCart.products}" var="Product">
+                                    <tr>
+                                        <td class="col-sm-8 col-md-6">
+                                            <div class="media">
+                                                <h:form>
+                                                    <h:commandLink action="#{product.show(Product.book.isbn)}" styleClass="thumbnail pull-left">
+                                                        <h:graphicImage styleClass="media-object" value="/resources/img/covers/#{Product.book.isbn}.jpg" style="max-height: 100px; width: auto; height: auto;"/>
+                                                    </h:commandLink>
+                                                </h:form>
+                                                <div class="media-body">
+                                                    <h4 class="media-heading"><a href="#">#{Product.book.title}</a></h4>
+                                                    <h5 class="media-heading"> #{bundle.Cart_By} <a href="#">#{Product.book.author}</a></h5>
+                                                    <span>#{bundle.Cart_Status} </span><span class="text-success"><strong>#{bundle.Cart_Available} #{Product.book.formats}</strong></span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="col-sm-1 col-md-1" style="text-align: center">
+
+                                            <h:inputText value="1" styleClass="form-control" id = "quantity" disabled="true">
+                                            </h:inputText>
+                                        </td>
+                                        <td class="col-sm-1 col-md-1 text-center"><strong>$#{Product.getPriceProduct()}</strong></td>
+                                        <td class="col-sm-1 col-md-1 text-center"><strong>$#{Product.priceProduct}</strong></td>
+                                        <td class="col-sm-1 col-md-1">
+                                            <h:form>
+                                                <h:commandLink action="#{shoppingCart.removeProduct(Product.book.isbn)}" styleClass="btn btn-danger">
+                                                    <span class="glyphicon glyphicon-remove"></span> #{bundle.Cart_Remove}
+                                                </h:commandLink>
+                                            </h:form>
+                                        </td>
+                                    </tr>
+                                </ui:repeat>
+                                <tr>
+                                    <td>   </td>
+                                    <td>   </td>
+                                    <td>   </td>
+                                    <td><h5>#{bundle.Cart_Subtotal}</h5></td>
+                                    <td class="text-right"><h5><strong>$#{shoppingCart.priceTotal}</strong></h5></td>
+                                </tr>
+                                <tr>
+                                    <td>   </td>
+                                    <td>   </td>
+                                    <td>   </td>
+                                    <td><h5>GST</h5></td>
+                                    <td class="text-right"> <h:outputText id ="gst" value ="$#{shoppingCart.gst}"/> </td>
+                                </tr>
+                                <tr>
+                                    <td>   </td>
+                                    <td>   </td>
+                                    <td>   </td>
+                                    <td><h5>HST</h5></td>
+                                    <td class="text-right"><h:outputText id ="hst" value ="$#{shoppingCart.hst}"/></td>
+                                </tr>
+                                <tr>
+                                    <td>   </td>
+                                    <td>   </td>
+                                    <td>   </td>
+                                    <td><h5>PST</h5></td>
+                                    <td class="text-right"><h:outputText id ="pst" value ="$#{shoppingCart.pst}"/></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h:form>
+                                            <p:selectOneMenu value = "#{shoppingCart.province}">
+                                                <f:selectItems value="#{shoppingCart.provinces}"/>
+                                                <p:ajax update=":pst :gst :hst :total :tax" listener="#{shoppingCart.provinceChangeListner}" />
+                                            </p:selectOneMenu>
+                                        </h:form>
+                                    </td>
+                                    <td>   </td>
+                                    <td>   </td>
+                                    <td><h5>Total tax</h5></td>
+                                    <td class="text-right"><h:outputText id ="tax" value ="$#{shoppingCart.tax}"/></td>
+                                </tr>
+                                <tr>
+                                    <td>   </td>
+                                    <td>   </td>
+                                    <td>   </td>
+                                    <td><h3>Total</h3></td>
+                                    <td class="text-right"><h:outputText id ="total" value ="$#{shoppingCart.total}"/></td>
+                                </tr>
+                                <tr>
+                                    <td>   </td>
+                                    <td>   </td>
+                                    <td>   </td>
+                                    <td>
+                                        <h:form>
+                                            <h:commandLink action="landing.xhtml?faces-redirect=true" class="btn btn-default">
+                                                <span class="glyphicon glyphicon-shopping-cart"></span> #{bundle.Cart_Continue_Shopping}
+                                            </h:commandLink> 
+                                        </h:form>
+                                    </td>
+                                    <td>
+                                        <h:form rendered="#{authenticationBackingBean.authenthicated}">
+                                            <h:commandLink action="/processing/payment.xhtml?faces-redirect=true" class="btn btn-default">
+                                                #{bundle.Cart_Checkout} <span class="glyphicon glyphicon-play"></span>
+                                            </h:commandLink> 
+                                        </h:form>
+                                        <h:form>
+                                            <h:commandLink rendered="#{!authenticationBackingBean.authenthicated}" action="register.xhtml?faces-redirect=true" class="btn btn-info">
+                                                Register <span class="glyphicon glyphicon-play "></span>
+                                            </h:commandLink> 
+                                        </h:form>
+                                    </td>
+                                </tr>
+                            </ui:fragment>
+                        </tbody>
+                    </table>
+                </div>
+            </ui:fragment>
+        </ui:define>
+
+    </ui:composition>
+</html>

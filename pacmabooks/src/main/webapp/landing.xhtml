@@ -1,0 +1,348 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- Author: Alexandre , Michael -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="template/main.xhtml">
+        <ui:define name="windowTitle">
+            PACMABOOKS
+        </ui:define>
+        <ui:define name="content">
+            <hr/>
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>#{bundle.Main_Client_Latest}</h4>
+                    <div class="carousel slide" id="myCarousel">
+                        <div class="carousel-inner">
+                            <div class="item active">
+                                <ul class="thumbnails">
+                                    <ui:repeat varStatus="status" value="#{carousselBackingBean.getLastestBooks(1)}" var="Book">
+                                        <li class="col-sm-3" style="min-height: 525px">
+                                            <h:form>
+                                                <div class="fff">
+                                                    <div class="thumbnail">
+                                                        <h:commandLink action="#{product.show(Book.isbn)}">
+                                                            <h:graphicImage styleClass="img-responsive text-center img-center" style="width: 100%; height: auto" value="/resources/img/covers/#{Book.isbn}.jpg"></h:graphicImage>
+                                                        </h:commandLink>
+                                                    </div>
+                                                    <div class="caption">
+                                                        <h4>#{Book.title}</h4>
+                                                        <p>#{Book.author}</p>
+                                                        <h:commandLink styleClass="btn btn-mini" action="#{product.show(Book.isbn)}">#{bundle.Main_Client_More}</h:commandLink>
+                                                    </div>
+                                                </div>
+                                            </h:form>
+                                        </li>
+                                    </ui:repeat>
+                                </ul>
+                            </div><!-- /Slide1 -->
+                            <div class="item">
+                                <ul class="thumbnails">
+                                    <ui:repeat varStatus="status" value="#{carousselBackingBean.getLastestBooks(2)}" var="Book">
+                                        <li class="col-sm-3" style="min-height: 525px">
+                                            <h:form>
+                                                <div class="fff">
+                                                    <div class="thumbnail">
+                                                        <h:commandLink action="#{product.show(Book.isbn)}">
+                                                            <h:graphicImage styleClass="img-responsive text-center img-center" style="width: 100%; height: auto" value="/resources/img/covers/#{Book.isbn}.jpg"></h:graphicImage>
+                                                        </h:commandLink>
+                                                    </div>
+                                                    <div class="caption">
+                                                        <h4>#{Book.title}</h4>
+                                                        <p>#{Book.author}</p>
+                                                        <h:commandLink styleClass="btn btn-mini" action="#{product.show(Book.isbn)}">#{bundle.Main_Client_More}</h:commandLink>
+                                                    </div>
+                                                </div>
+                                            </h:form>
+                                        </li>
+                                    </ui:repeat>
+                                </ul>
+                            </div><!-- /Slide2 -->
+                            <div class="item">
+                                <ul class="thumbnails">
+                                    <ui:repeat varStatus="status" value="#{carousselBackingBean.getLastestBooks(3)}" var="Book">
+                                        <li class="col-sm-3" style="min-height: 525px">
+                                            <h:form>
+                                                <div class="fff">
+                                                    <div class="thumbnail">
+                                                        <h:commandLink action="#{product.show(Book.isbn)}">
+                                                            <h:graphicImage styleClass="img-responsive text-center img-center" style="width: 100%; height: auto" value="/resources/img/covers/#{Book.isbn}.jpg"></h:graphicImage>
+                                                        </h:commandLink>
+                                                    </div>
+                                                    <div class="caption">
+                                                        <h4>#{Book.title}</h4>
+                                                        <p>#{Book.author}</p>
+                                                        <h:commandLink styleClass="btn btn-mini" action="#{product.show(Book.isbn)}">#{bundle.Main_Client_More}</h:commandLink>
+                                                    </div>
+                                                </div>
+                                            </h:form>
+                                        </li>
+                                    </ui:repeat>
+                                </ul>
+                            </div><!-- /Slide3 -->
+                        </div>
+
+
+                        <nav>
+                            <ul class="control-box pager">
+                                <li><a data-slide="prev" href="#myCarousel" class=""><i class="glyphicon glyphicon-chevron-left"></i></a></li>
+                                <li><a data-slide="next" href="#myCarousel" class=""><i class="glyphicon glyphicon-chevron-right"></i></a></li>
+                            </ul>
+                        </nav>
+                        <!-- /.control-box -->
+
+                    </div><!-- /#myCarousel -->
+                </div>
+            </div>
+            <hr/>
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <h:graphicImage class="img-responsive" value="#{main.getBannerAdForSlot(3)}"/>
+                </div>
+            </div>
+            <hr/>
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>#{bundle.Main_Client_Sales}</h4>
+                    <div class="carousel slide" id="myCarousel5">
+                        <div class="carousel-inner">
+                            <div class="item active">
+                                <ul class="thumbnails">
+                                    <ui:repeat varStatus="status" value="#{carousselBackingBean.getSalesBook(1)}" var="Book">
+                                        <li class="col-sm-3" style="min-height: 525px">
+                                            <h:form>
+                                                <div class="fff">
+                                                    <div class="thumbnail">
+                                                        <h:commandLink action="#{product.show(Book.isbn)}">
+                                                            <h:graphicImage styleClass="img-responsive text-center img-center" style="width: 100%; height: auto" value="/resources/img/covers/#{Book.isbn}.jpg"></h:graphicImage>
+                                                        </h:commandLink>
+                                                    </div>
+                                                    <div class="caption">
+                                                        <h4>#{Book.title}</h4>
+                                                        <p>#{Book.author}</p>
+                                                        <h:commandLink styleClass="btn btn-mini" action="#{product.show(Book.isbn)}">#{bundle.Main_Client_More}</h:commandLink>
+                                                    </div>
+                                                </div>
+                                            </h:form>
+                                        </li>
+                                    </ui:repeat>
+                                </ul>
+                            </div><!-- /Slide1 -->
+                            <div class="item">
+                                <ul class="thumbnails">
+                                    <ui:repeat varStatus="status" value="#{carousselBackingBean.getSalesBook(2)}" var="Book">
+                                        <li class="col-sm-3" style="min-height: 525px">
+                                            <h:form>
+                                                <div class="fff">
+                                                    <div class="thumbnail">
+                                                        <h:commandLink action="#{product.show(Book.isbn)}">
+                                                            <h:graphicImage styleClass="img-responsive text-center img-center" style="width: 100%; height: auto" value="/resources/img/covers/#{Book.isbn}.jpg"></h:graphicImage>
+                                                        </h:commandLink>
+                                                    </div>
+                                                    <div class="caption">
+                                                        <h4>#{Book.title}</h4>
+                                                        <p>#{Book.author}</p>
+                                                        <h:commandLink styleClass="btn btn-mini" action="#{product.show(Book.isbn)}">#{bundle.Main_Client_More}</h:commandLink>
+                                                    </div>
+                                                </div>
+                                            </h:form>
+                                        </li>
+                                    </ui:repeat>
+                                </ul>
+                            </div><!-- /Slide2 -->
+                        </div>
+                        <nav>
+                            <ul class="control-box pager">
+                                <li><a data-slide="prev" href="#myCarousel5" class=""><i class="glyphicon glyphicon-chevron-left"></i></a></li>
+                                <li><a data-slide="next" href="#myCarousel5" class=""><i class="glyphicon glyphicon-chevron-right"></i></a></li>
+                            </ul>
+                        </nav>
+                        <!-- /.control-box -->
+
+                    </div><!-- /#myCarousel -->
+                </div>
+            </div>
+            <hr/>
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <h:graphicImage class="img-responsive" value="#{main.getBannerAdForSlot(4)}"/>
+                </div>
+            </div>
+            <hr/>
+            <div class="row">
+                <div class="col-md-12">
+                    <ui:fragment rendered="#{carousselBackingBean.displayRecomanded()}">
+                        <h4>#{bundle.Main_Client_Reco}</h4>
+                        <div class="carousel slide" id="myCarousel2">
+                            <div class="carousel-inner">
+                                <div class="item active">
+                                    <ul class="thumbnails">
+                                        <ui:repeat varStatus="status" value="#{carousselBackingBean.getRecomandedBook(1)}" var="Book">
+                                            <li class="col-sm-3" style="min-height: 525px">
+                                                <h:form>
+                                                    <div class="fff">
+                                                        <div class="thumbnail">
+                                                            <h:commandLink action="#{product.show(Book.isbn)}">
+                                                                <h:graphicImage styleClass="img-responsive text-center img-center" style="width: 100%; height: auto" value="/resources/img/covers/#{Book.isbn}.jpg"></h:graphicImage>
+                                                            </h:commandLink>
+                                                        </div>
+                                                        <div class="caption">
+                                                            <h4>#{Book.title}</h4>
+                                                            <p>#{Book.author}</p>
+                                                            <h:commandLink styleClass="btn btn-mini" action="#{product.show(Book.isbn)}">#{bundle.Main_Client_More}</h:commandLink>
+                                                        </div>
+                                                    </div>
+                                                </h:form>
+                                            </li>
+                                        </ui:repeat>
+                                    </ul>
+                                </div><!-- /Slide1 -->
+                                <div class="item">
+                                    <ul class="thumbnails">
+                                        <ui:repeat varStatus="status" value="#{carousselBackingBean.getRecomandedBook(2)}" var="Book">
+                                            <li class="col-sm-3" style="min-height: 525px">
+                                                <h:form>
+                                                    <div class="fff">
+                                                        <div class="thumbnail">
+                                                            <h:commandLink action="#{product.show(Book.isbn)}">
+                                                                <h:graphicImage styleClass="img-responsive text-center img-center" style="width: 100%; height: auto" value="/resources/img/covers/#{Book.isbn}.jpg"></h:graphicImage>
+                                                            </h:commandLink>
+                                                        </div>
+                                                        <div class="caption">
+                                                            <h4>#{Book.title}</h4>
+                                                            <p>#{Book.author}</p>
+                                                            <h:commandLink styleClass="btn btn-mini" action="#{product.show(Book.isbn)}">#{bundle.Main_Client_More}</h:commandLink>
+                                                        </div>
+                                                    </div>
+                                                </h:form>
+                                            </li>
+                                        </ui:repeat>
+                                    </ul>
+                                </div><!-- /Slide2 -->
+                            </div>
+                            <nav>
+                                <ul class="control-box pager">
+                                    <li><a data-slide="prev" href="#myCarousel2" class=""><i class="glyphicon glyphicon-chevron-left"></i></a></li>
+                                    <li><a data-slide="next" href="#myCarousel2" class=""><i class="glyphicon glyphicon-chevron-right"></i></a></li>
+                                </ul>
+                            </nav>
+                            <!-- /.control-box -->
+                        </div><!-- /#myCarousel -->
+                    </ui:fragment>
+                    <ui:fragment rendered="#{!carousselBackingBean.displayRecomanded()}">
+                        <h4>#{bundle.Main_Client_Some}</h4>
+                        <div class="carousel slide" id="myCarousel2">
+                            <div class="carousel-inner">
+                                <div class="item active">
+                                    <ul class="thumbnails">
+                                        <ui:repeat varStatus="status" value="#{carousselBackingBean.getRandomGenreBook(1)}" var="Booka">
+                                            <li class="col-sm-3" style="min-height: 525px">
+                                                <h:form>
+                                                    <div class="fff">
+                                                        <div class="thumbnail">
+                                                            <h:commandLink action="#{product.show(Booka.isbn)}">
+                                                                <h:graphicImage styleClass="img-responsive text-center img-center" style="width: 100%; height: auto" value="/resources/img/covers/#{Booka.isbn}.jpg"></h:graphicImage>
+                                                            </h:commandLink>
+                                                        </div>
+                                                        <div class="caption">
+                                                            <h4>#{Booka.title}</h4>
+                                                            <p>#{Booka.author}</p>
+                                                            <h:commandLink styleClass="btn btn-mini" action="#{product.show(Booka.isbn)}">#{bundle.Main_Client_More}</h:commandLink>
+                                                        </div>
+                                                    </div>
+                                                </h:form>
+                                            </li>
+                                        </ui:repeat>
+                                    </ul>
+                                </div><!-- /Slide1 -->
+                                <div class="item">
+                                    <ul class="thumbnails">
+                                        <ui:repeat varStatus="status" value="#{carousselBackingBean.getRandomGenreBook(2)}" var="Bookb">
+                                            <li class="col-sm-3" style="min-height: 525px">
+                                                <h:form>
+                                                    <div class="fff">
+                                                        <div class="thumbnail">
+                                                            <h:commandLink action="#{product.show(Bookb.isbn)}">
+                                                                <h:graphicImage styleClass="img-responsive text-center img-center" style="width: 100%; height: auto" value="/resources/img/covers/#{Bookb.isbn}.jpg"></h:graphicImage>
+                                                            </h:commandLink>
+                                                        </div>
+                                                        <div class="caption">
+                                                            <h4>#{Bookb.title}</h4>
+                                                            <p>#{Bookb.author}</p>
+                                                            <h:commandLink styleClass="btn btn-mini" action="#{product.show(Bookb.isbn)}">#{bundle.Main_Client_More}</h:commandLink>
+                                                        </div>
+                                                    </div>
+                                                </h:form>
+                                            </li>
+                                        </ui:repeat>
+                                    </ul>
+                                </div><!-- /Slide2 -->
+                            </div>
+                            <nav>
+                                <ul class="control-box pager">
+                                    <li><a data-slide="prev" href="#myCarousel2" class=""><i class="glyphicon glyphicon-chevron-left"></i></a></li>
+                                    <li><a data-slide="next" href="#myCarousel2" class=""><i class="glyphicon glyphicon-chevron-right"></i></a></li>
+                                </ul>
+                            </nav>
+                            <!-- /.control-box -->
+                        </div><!-- /#myCarousel -->
+                    </ui:fragment>
+
+                </div>
+            </div>
+            <hr/>
+            <div class="row">
+                <div class="col-md-12">
+
+
+                    <h:form id="main">
+                        <ui:fragment id="none_available" rendered="#{!surveySessionBackingBean.isAvailable}" >
+                            <h4>#{bundle.survey_none}</h4>
+                        </ui:fragment>
+                        <ui:fragment id="available_surveys" rendered="#{surveySessionBackingBean.isAvailable}">
+                            <h4>#{bundle.survey_select_one}</h4>
+                            <ul>
+                                <ui:repeat varStatus="status" value="#{surveySessionBackingBean.allSurveys}" var="Survey">
+                                    <li class="row">
+                                        <p:commandLink value="#{Survey.question}" update=":main" action="#{surveySessionBackingBean.setCurrentSurvey(Survey)}">
+                                        </p:commandLink>
+                                    </li>
+                                </ui:repeat>
+                            </ul>
+                        </ui:fragment>
+                        <hr/>
+                        <ui:fragment id="surveyFrag" rendered="#{surveySessionBackingBean.isSurveySelected()}">
+                            <h:panelGroup id="messagePanel" layout="block">
+                                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                            </h:panelGroup>
+                            <h:panelGrid columns="1" style="margin-bottom:10px" cellpadding="5">
+                                <p:outputLabel for="answer" value="#{surveySessionBackingBean.currentSurvey.question}" />
+                                <p:selectOneRadio style="margin-left: 20px; margin-right: 20px;" id="answer" value="#{surveySessionBackingBean.answer}" required="true" requiredMessage="#{bundle.survey_error_select}">
+                                    <f:selectItem class="row" itemLabel="#{surveySessionBackingBean.currentSurvey.answer1}" itemValue="1" />
+                                    <f:selectItem class="row" itemLabel="#{surveySessionBackingBean.currentSurvey.answer2}" itemValue="2" />
+                                    <f:selectItem class="row" itemLabel="#{surveySessionBackingBean.currentSurvey.answer3}" itemValue="3" />
+                                </p:selectOneRadio>
+                            </h:panelGrid>
+
+                            <p:commandButton value="Submit" action="#{surveyBackingBean.submit()}" update=":main" icon="ui-icon-check">
+                            </p:commandButton>
+                        </ui:fragment>
+                        <ui:fragment id="finished_survey" rendered="#{surveySessionBackingBean.finishedSurvey}">
+                            <h4>#{bundle.survey_thank_you}</h4>
+                        </ui:fragment>
+                        <ui:fragment id="chart" rendered="#{surveyBackingBean.showChart()}">
+                            <h:panelGrid columns="2" columnClasses="left" style="width:80%">
+                                <p:chart type="pie" model="#{surveyBackingBean.pieModel1}" style="width:400px;height:300px">
+                                </p:chart>
+                            </h:panelGrid>
+                        </ui:fragment>
+                    </h:form>
+                </div>
+            </div>
+            <br/>
+        </ui:define>
+    </ui:composition>
+</html>

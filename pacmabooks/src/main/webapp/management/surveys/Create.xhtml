@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- Author: Philip -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template/management.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateSurveysTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form id="main">
+                <h:panelGrid columns="2">
+                    <p:outputLabel value="#{bundle.CreateSurveysLabel_enabled}" for="enabled" />
+                    <p:selectBooleanCheckbox id="enabled" value="#{surveysAction.current.enabled}" />
+                    <p:outputLabel value="#{bundle.CreateSurveysLabel_question}" for="question" />
+                    <p:inputText id="question" value="#{surveysAction.current.question}" title="#{bundle.CreateSurveysTitle_question}" required="true" requiredMessage="#{bundle.CreateSurveysRequiredMessage_question}"/>
+                    <p:outputLabel value="#{bundle.CreateSurveysLabel_answer1}" for="answer1" />
+                    <p:inputText id="answer1" value="#{surveysAction.current.answer1}" title="#{bundle.CreateSurveysTitle_answer1}" required="true" requiredMessage="#{bundle.CreateSurveysRequiredMessage_answer1}"/>
+                    <p:outputLabel value="#{bundle.CreateSurveysLabel_answer2}" for="answer2" />
+                    <p:inputText id="answer2" value="#{surveysAction.current.answer2}" title="#{bundle.CreateSurveysTitle_answer2}" required="true" requiredMessage="#{bundle.CreateSurveysRequiredMessage_answer2}"/>
+                    <p:outputLabel value="#{bundle.CreateSurveysLabel_answer3}" for="answer3" />
+                    <p:inputText id="answer3" value="#{surveysAction.current.answer3}" title="#{bundle.CreateSurveysTitle_answer3}" required="true" requiredMessage="#{bundle.CreateSurveysRequiredMessage_answer3}"/>
+                    <p:outputLabel value="#{bundle.CreateSurveysLabel_answer1Count}" for="answer1Count" />
+                    <p:inputText id="answer1Count" value="#{surveysAction.current.answer1Count}" title="#{bundle.CreateSurveysTitle_answer1Count}" required="true" requiredMessage="#{bundle.CreateSurveysRequiredMessage_answer1Count}"/>
+                    <p:outputLabel value="#{bundle.CreateSurveysLabel_answer2Count}" for="answer2Count" />
+                    <p:inputText id="answer2Count" value="#{surveysAction.current.answer2Count}" title="#{bundle.CreateSurveysTitle_answer2Count}" required="true" requiredMessage="#{bundle.CreateSurveysRequiredMessage_answer2Count}"/>
+                    <p:outputLabel value="#{bundle.CreateSurveysLabel_answer3Count}" for="answer3Count" />
+                    <p:inputText id="answer3Count" value="#{surveysAction.current.answer3Count}" title="#{bundle.CreateSurveysTitle_answer3Count}" required="true" requiredMessage="#{bundle.CreateSurveysRequiredMessage_answer3Count}"/>
+                </h:panelGrid>
+                <p:commandButton action="#{surveysAction.create}" value="#{bundle.CreateSurveysSaveLink}" update=":main :messagePanel" icon="ui-icon-disk" />
+                &nbsp;
+                <p:commandButton action="#{surveysAction.prepareList}" value="#{bundle.CreateSurveysShowAllLink}" immediate="true" ajax="false" />
+                <br />
+                <br />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

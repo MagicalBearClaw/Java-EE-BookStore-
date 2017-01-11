@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- Author: Philip -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template/management.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListClientsTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form id="main" styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{bundle.ListClientsEmpty}" rendered="#{clientsAction.items.rowCount == 0}"/>
+                <p:dataTable id="datalist" value="#{clientsAction.items}" var="item" widgetVar="table"
+                             paginator="true"
+                             rowKey="#{item.id}"
+                             rows="20"
+                             rowsPerPageTemplate="5,10,20,30,40,50" >
+                    <f:facet name="header">
+                        <p:outputPanel style="text-align: right;">
+                            <h:outputText value="#{bundle.SearchTitle}" />
+                            <p:inputText id="globalFilter" onkeyup="PF('table').filter()" style="width:150px" placeholder="#{bundle.SearchQuery}"/>
+                        </p:outputPanel>
+                    </f:facet>
+                    <p:column headerText="#{bundle.ListClientsTitle_id}" sortBy="#{item.id}" style="width:4em;">
+                        <h:outputText value="#{item.id}"/>
+                    </p:column>
+                    <p:column headerText="#{bundle.ListClientsTitle_title}" sortBy="#{item.title}" style="width:6em;">
+                        <h:outputText value="#{item.title}"/>
+                    </p:column>
+                    <p:column headerText="#{bundle.ListClientsTitle_firstName}" sortBy="#{item.firstName}" filterBy="#{item.firstName}" filterMatchMode="contains">
+                        <h:outputText value="#{item.firstName}"/>
+                    </p:column>
+                    <p:column headerText="#{bundle.ListClientsTitle_lastName}" sortBy="#{item.lastName}" filterBy="#{item.lastName}" filterMatchMode="contains">
+                        <h:outputText value="#{item.lastName}"/>
+                    </p:column>
+                    <p:column headerText="#{bundle.ListClientsTitle_company}" sortBy="#{item.company}" filterBy="#{item.company}" filterMatchMode="contains">
+                        <h:outputText value="#{item.company}"/>
+                    </p:column>
+                    <p:column headerText="#{bundle.ListClientsTitle_homePhone}" sortBy="#{item.homePhone}" filterBy="#{item.homePhone}" filterMatchMode="contains" style="width:11em;">
+                        <h:outputText value="#{item.homePhone}"/>
+                    </p:column>
+                    <p:column headerText="#{bundle.ListClientsTitle_cellPhone}" sortBy="#{item.cellPhone}" filterBy="#{item.cellPhone}" filterMatchMode="contains" style="width:11em;">
+                        <h:outputText value="#{item.cellPhone}"/>
+                    </p:column>
+                    <p:column headerText="#{bundle.ListClientsTitle_email}" sortBy="#{item.email}" filterBy="#{item.email}" filterMatchMode="contains">
+                        <h:outputText value="#{item.email}"/>
+                    </p:column>
+                    <p:column headerText="#{bundle.ListClientsTitle_password}" sortBy="#{item.password}" filterBy="#{item.password}" filterMatchMode="contains">
+                        <h:outputText value="#{item.password}"/>
+                    </p:column>
+                    <p:column headerText="#{bundle.ListClientsTitle_isManager}" sortBy="#{item.isManager}" style="width:10em;">
+                        <h:outputText value="#{item.isManager}"/>
+                    </p:column>
+                    <p:column style="width:9em;">
+                        <f:facet name="header">
+                            <h:outputText value="&nbsp;"/>
+                        </f:facet>
+                        <h:commandLink action="#{clientsAction.prepareView(item)}" value="#{bundle.ListClientsViewLink}"/>
+                        <h:outputText value=" "/>
+                        <h:commandLink action="#{clientsAction.prepareEdit(item)}" value="#{bundle.ListClientsEditLink}"/>
+                        <h:outputText value=" "/>
+                        <p:commandLink action="#{clientsAction.destroy(item)}" value="#{bundle.ListClientsDestroyLink}" update=":main" />
+                    </p:column>
+                </p:dataTable>
+                <br />
+                <p:commandButton action="#{clientsAction.prepareCreate}" value="#{bundle.ListClientsCreateLink}"/>
+                <br />
+                <br />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

@@ -1,0 +1,280 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- Author: Alexandre -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="template/main.xhtml">
+        <ui:define name="windowTitle">
+            #{bundle.Page_Product}
+        </ui:define>
+        <ui:define name="content">
+            <hr/>
+            <!--Product here-->
+            <div class="row">
+                <div class="col-md-6">
+                    <h:graphicImage style=" min-height: 500px; max-height:600px; width: auto; margin: 0 auto" styleClass="img-responsive img-center" value="/resources/img/covers/#{product.book.isbn}.jpg" alt="#{product.book.title} Cover Image"/>
+                </div>
+                <div class="col-md-6">
+                    <h1 class="text-center text-info">#{product.book.title}</h1>
+                    <hr/>
+                    <div class="table-responsive text-center">
+                        <table class="table">
+                            <thead>
+                                <tr class="info">
+                                    <td>
+                                        <h4>
+                                            #{bundle.Product_Price}
+                                        </h4>
+                                    </td>
+                                    <td>
+                                        <h3><strong><h:outputText rendered="#{product.onSale}" value="$#{product.book.salePrice}" class ="text-danger"/></strong></h3>
+                                        <h4><h:outputText styleClass="text-warning" value="#{product.off} #{bundle.Product_off}" rendered="#{product.onSale}"></h:outputText></h4>
+                                        <h3><h:outputText rendered="#{!product.onSale}" value="$#{product.book.listPrice}"/></h3>
+                                        <span>
+                                            <h:form >
+                                                <h:commandLink rendered="#{!shoppingCart.productCheck(product.book.isbn)}" action="#{shoppingCart.addProduct(product.book.isbn)}" styleClass="btn btn-info btn-sm">
+                                                    <span class="glyphicon glyphicon-shopping-cart"></span>Add to cart
+                                                </h:commandLink>
+                                                <h:outputText rendered="#{shoppingCart.productCheck(product.book.isbn)}" value="#{bundle.Product_add_error_owned}" styleClass="text-success"/>
+                                            </h:form>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        #{bundle.Product_Rating}
+                                    </td>
+                                    <td>
+                                        <input class="rating" value="#{product.rate}" readonly="" data-min="0" data-max="5" data-step="0.1" data-show-clear="false" data-show-caption="false"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        #{bundle.Product_Formats}
+                                    </td>
+                                    <td>
+                                        <p class="text-info">#{product.book.formats}</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        #{bundle.Product_Genre}
+                                    </td>
+                                    <td>
+                                        #{product.book.genre}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <hr/>
+                    <ul class="nav nav-tabs">
+                        <li role="presentation"><a href="#synopsis" data-toggle="tab">#{bundle.Product_Synopsis}</a></li>
+                        <li role="presentation"><a href="#more" data-toggle="tab">#{bundle.Product_Additional}</a></li>
+                        <li role="presentation" class="active"><a href="#review" data-toggle="tab">#{bundle.Product_Reviews} (#{product.reviewNumber})</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div id="synopsis" class="tab-pane fade">
+                            <h3>
+                                #{bundle.Product_Synopsis}
+                            </h3>
+                            <p>
+                                #{product.book.description}
+                            </p>
+                        </div>
+                        <div id="more" class="tab-pane fade">
+                            <h3>
+                                #{bundle.Product_Additional}
+                            </h3>
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>#{bundle.Product_Characteristics}</th>
+                                            <th>#{bundle.Product_Detail}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>#{bundle.Product_Isbn}</td>
+                                            <td>#{product.book.isbn}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>#{bundle.Product_Publisher}</td>
+                                            <td>#{product.book.publisher}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>#{bundle.Product_Publication}</td>
+                                            <td>#{product.book.publishDate}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>#{bundle.Product_Pages}</td>
+                                            <td>#{product.book.numOfPages}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>#{bundle.Product_File_Size}</td>
+                                            <td>#{product.book.fileSize}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>#{bundle.Product_Format_Details}</td>
+                                            <td>#{product.book.formats}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>#{bundle.Product_Genre_Details}</td>
+                                            <td>#{product.book.genre}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div id="review" class="tab-pane fade in active">
+                            <h3>
+                                #{bundle.Product_Reviews}
+                            </h3>
+                            <ui:fragment rendered="#{authenticationBackingBean.authenthicated}">
+                                <h:form styleClass="form-horizontal" id="reviewForm">
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2" for="content">
+                                            #{bundle.Product_Reviews_Content}
+                                        </label>
+                                        <div class="col-sm-offset-1 col-sm-9">
+                                            <h:inputTextarea a:placeholder="#{bundle.Product_Enter_Review}" styleClass="form-control" value="#{reviewBackingBean.review.review}"></h:inputTextarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2" for="rate">
+                                            #{bundle.Product_Rating}
+                                        </label>
+                                        <div class="col-sm-offset-1 col-sm-9">
+                                            <h:inputText value="#{reviewBackingBean.review.reviewScore}" id="rate" styleClass="rating" a:data-min="0" a:data-max="5" a:data-step="1" a:data-show-clear="false" a:data-show-caption="true"></h:inputText>
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2" for="rate">
+                                            #{bundle.Register_Submit}
+                                        </label>
+                                        <div class="col-sm-offset-1 col-sm-9">
+                                            <p:commandLink id="msg2" disabled="#{reviewBackingBean.displaySucess}" styleClass="btn btn-success" action="#{reviewBackingBean.add()}" update="msg msg2"><span class="glyphicon glyphicon-save"></span> #{bundle.Product_Validate}</p:commandLink>
+                                        </div>
+                                    </div>
+                                    <h:panelGroup layout="block" id="msg">
+                                        <h:outputText styleClass="text-center text-success" rendered="#{reviewBackingBean.displaySucess}" value="#{bundle.Product_Reviews_OK}"/>
+                                        <h:outputText styleClass="text-center text-danger" rendered="#{reviewBackingBean.displayError}" value="#{bundle.Product_Reviews_NOK}" />
+                                    </h:panelGroup>
+                                </h:form>
+                                <br></br>
+                            </ui:fragment>
+                            <ui:fragment rendered="#{!authenticationBackingBean.authenthicated}">
+                                <h2 class="text-center text-info">#{bundle.Product_Login_First}</h2>
+                            </ui:fragment>
+                            <ui:fragment rendered="#{product.renderReviews()}">
+                                <div class="media-list">
+                                    <ui:repeat varStatus="status" value="#{product.reviews}" var="Review">
+                                        <hr></hr>
+                                        <div class="media">
+                                            <div class="media-body">
+                                                <h4 class="media-heading">#{clientReviewBackingBean.getFirst(Review.clientId)} #{clientReviewBackingBean.getLast(Review.clientId)}</h4>
+                                                <p>#{Review.review}</p>
+                                                <p>#{Review.reviewDate}</p>
+                                                <input class="rating" value="#{Review.reviewScore}" readonly="" data-min="0" data-max="5" data-step="1" data-show-clear="false" data-size="xs" data-show-caption="false"/>
+                                                <ui:fragment rendered="#{reviewBackingBean.displayDelete(Review)}">
+                                                    <h:form>
+                                                        <h:commandLink action="#{reviewBackingBean.delete(Review)}" styleClass="btn btn-danger btn-mini">
+                                                            <span class="glyphicon glyphicon-remove"></span> #{bundle.Product_Remove}
+                                                        </h:commandLink>
+                                                    </h:form>
+                                                </ui:fragment>
+                                            </div>
+                                        </div>
+                                    </ui:repeat>
+                                </div>
+                            </ui:fragment>
+                            <ui:fragment rendered="#{!product.renderReviews()}">
+                                <h3 class="text-center text-muted">#{bundle.Product_No_Reviews}</h3>
+                            </ui:fragment>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr/>
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <img class="img-responsive img-center" src="#{resource['images/ad1.jpg']}"/>
+                </div>
+            </div>
+            <hr/>
+            <div class="row">
+                <div class="col-md-12">
+                    <ui:fragment rendered="true">
+                        <h4>#{bundle.Main_Client_Reco}</h4>
+                        <div class="carousel slide" id="myCarousel2">
+                            <div class="carousel-inner">
+                                <div class="item active">
+                                    <ul class="thumbnails">
+                                        <ui:repeat varStatus="status" value="#{product.getBookSameGenre(1)}" var="Book">
+                                            <li class="col-sm-3" style="min-height: 525px">
+                                                <h:form>
+                                                    <div class="fff">
+                                                        <div class="thumbnail">
+                                                            <h:commandLink action="#{product.show(Book.isbn)}">
+                                                                <h:graphicImage styleClass="img-responsive text-center img-center" style="width: 100%; height: auto" value="/resources/img/covers/#{Book.isbn}.jpg"></h:graphicImage>
+                                                            </h:commandLink>
+                                                        </div>
+                                                        <div class="caption">
+                                                            <h4>#{Book.title}</h4>
+                                                            <p>#{Book.author}</p>
+                                                            <h:commandLink styleClass="btn btn-mini" action="#{product.show(Book.isbn)}">» #{bundle.Books_Client_Read_More}</h:commandLink>
+                                                        </div>
+                                                    </div>
+                                                </h:form>
+                                            </li>
+                                        </ui:repeat>
+                                    </ul>
+                                </div><!-- /Slide1 -->
+                                <div class="item">
+                                    <ul class="thumbnails">
+                                        <ui:repeat varStatus="status" value="#{product.getBookSameGenre(2)}" var="Book">
+                                            <li class="col-sm-3" style="min-height: 525px">
+                                                <h:form>
+                                                    <div class="fff">
+                                                        <div class="thumbnail">
+                                                            <h:commandLink action="#{product.show(Book.isbn)}">
+                                                                <h:graphicImage styleClass="img-responsive text-center img-center" style="width: 100%; height: auto" value="/resources/img/covers/#{Book.isbn}.jpg"></h:graphicImage>
+                                                            </h:commandLink>
+                                                        </div>
+                                                        <div class="caption">
+                                                            <h4>#{Book.title}</h4>
+                                                            <p>#{Book.author}</p>
+                                                            <h:commandLink styleClass="btn btn-mini" action="#{product.show(Book.isbn)}">» » #{bundle.Books_Client_Read_More}</h:commandLink>
+                                                        </div>
+                                                    </div>
+                                                </h:form>
+                                            </li>
+                                        </ui:repeat>
+                                    </ul>
+                                </div><!-- /Slide2 -->
+                            </div>
+                            <nav>
+                                <ul class="control-box pager">
+                                    <li><a data-slide="prev" href="#myCarousel2" class=""><i class="glyphicon glyphicon-chevron-left"></i></a></li>
+                                    <li><a data-slide="next" href="#myCarousel2" class=""><i class="glyphicon glyphicon-chevron-right"></i></a></li>
+                                </ul>
+                            </nav>
+                            <!-- /.control-box -->
+                        </div><!-- /#myCarousel -->
+                    </ui:fragment>
+                </div>
+            </div>
+            <hr/>
+            <!--<hr>-->
+            <br/>
+        </ui:define>
+    </ui:composition>
+</html>

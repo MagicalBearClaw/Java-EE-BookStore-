@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- Author: Alexandre -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <ui:composition template="template/main.xhtml">
+        <ui:define name="windowTitle">
+            #{bundle.Page_Books}
+        </ui:define>
+        <ui:define name="content">
+            <hr/>
+            <div class="row">
+                <h3 class="text-center text-info text-capitalize">#{bundle.Books_Client_Results_Message} #{search.search}</h3>
+            </div>
+            <hr/>
+            <ui:fragment rendered="#{search.displayBestSellers()}">
+                <h4>Best sellers</h4>
+                <h:form>
+                    <div class="row">
+                        <ui:repeat varStatus="status" value="#{search.bestSellers}" var="Book">
+                            <div class="col-md-3 col-sm-6" style="min-height: 630px">
+                                <div class="thumbnail">
+                                    <h:commandLink action="#{product.show(Book.isbn)}"><h:graphicImage style="width: 100%; height: auto" styleClass="img-responsive text-center img-center" value="/resources/img/covers/#{Book.isbn}.jpg"></h:graphicImage></h:commandLink>
+                                </div>
+                                <div class="caption">
+                                    <h4>#{Book.title}</h4>
+                                    <p>#{Book.author}</p>
+                                    <h:commandLink styleClass="btn btn-mini" action="#{product.show(Book.isbn)}">>> #{bundle.Books_Client_Read_More}</h:commandLink>
+                                </div>
+                            </div>
+                        </ui:repeat>
+                    </div>
+                </h:form>
+                <hr/>
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <img class="img-responsive" src="#{resource['images/ad1.jpg']}"/>
+                    </div>
+                </div>
+                <hr/>
+            </ui:fragment>
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="list-group">
+                        <h:form>
+                            <li class="list-group-item list-group-item-info">#{bundle.Books_Client_Filter}</li>
+                            <h:commandLink styleClass="list-group-item" action="#{main.submitGenre('Fantasy')}">#{bundle.Main_Template_Genre1}</h:commandLink>
+                            <h:commandLink styleClass="list-group-item" action="#{main.submitGenre('Romance')}">#{bundle.Main_Template_Genre2}</h:commandLink>
+                            <h:commandLink styleClass="list-group-item" action="#{main.submitGenre('Horror')}">#{bundle.Main_Template_Genre3}</h:commandLink>
+                            <h:commandLink styleClass="list-group-item" action="#{main.submitGenre('Science Fiction')}">#{bundle.Main_Template_Genre4}</h:commandLink>
+                            <h:commandLink styleClass="list-group-item" action="#{main.submitGenre('Mystery')}">#{bundle.Main_Template_Genre5}</h:commandLink>
+                        </h:form>
+                    </div>
+                </div>
+                <div class="col-md-10">
+                    <h:form>
+                        <div class="row">
+                            <ui:repeat varStatus="status" value="#{search.paginator.model}" var="Book">
+                                <div class="col-md-4" style="min-height: 650px">
+                                    <div class="thumbnail">
+                                        <h:commandLink action="#{product.show(Book.isbn)}"><h:graphicImage style="width: 100%; height: auto" styleClass="img-responsive text-center img-center" value="/resources/img/covers/#{Book.isbn}.jpg"></h:graphicImage></h:commandLink>
+                                    </div>
+                                    <div class="caption">
+                                        <h4>#{Book.title}</h4>
+                                        <p>#{Book.author}</p>
+                                        <h:commandLink styleClass="btn btn-mini" action="#{product.show(Book.isbn)}">>> #{bundle.Books_Client_Read_More}</h:commandLink>
+                                    </div>
+                                </div>
+                            </ui:repeat>
+                        </div>
+                        <hr/>
+                        <div class="row">
+                            <ul class="pager">
+                                <h:panelGroup rendered="#{search.paginator.displayPrev()}">
+                                    <li><h:commandLink action="#{search.paginator.prev}">#{bundle.Books_Client_Previous}</h:commandLink></li>
+                                </h:panelGroup>
+                                <li><a href="#">#{search.paginator.pageIndex}</a></li>
+                                <h:panelGroup rendered="#{search.paginator.displayNext()}">
+                                    <li><h:commandLink action="#{search.paginator.next}">#{bundle.Books_Client_Next}</h:commandLink></li>
+                                </h:panelGroup>
+                            </ul>
+                        </div>
+                    </h:form>
+                </div>
+            </div>
+            <br/>
+        </ui:define>
+    </ui:composition>
+</html>

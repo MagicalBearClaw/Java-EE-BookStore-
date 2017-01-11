@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- Author: Philip -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template/management.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditDetailsTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form id="main">
+                <h:panelGrid columns="2">
+                    <p:outputLabel value="#{bundle.EditDetailsLabel_id}" for="id" />
+                    <p:inputText id="id" value="#{detailsAction.current.id}" title="#{bundle.EditDetailsTitle_id}" required="true" requiredMessage="#{bundle.EditDetailsRequiredMessage_id}"/>
+                    <p:outputLabel value="#{bundle.EditDetailsLabel_price}" for="price" />
+                    <p:inputText id="price" value="#{detailsAction.current.price}" title="#{bundle.EditDetailsTitle_price}" required="true" requiredMessage="#{bundle.EditDetailsRequiredMessage_price}"/>
+                    <p:outputLabel value="#{bundle.EditDetailsLabel_pst}" for="pst" />
+                    <p:inputText id="pst" value="#{detailsAction.current.pst}" title="#{bundle.EditDetailsTitle_pst}" required="true" requiredMessage="#{bundle.EditDetailsRequiredMessage_pst}"/>
+                    <p:outputLabel value="#{bundle.EditDetailsLabel_gst}" for="gst" />
+                    <p:inputText id="gst" value="#{detailsAction.current.gst}" title="#{bundle.EditDetailsTitle_gst}" required="true" requiredMessage="#{bundle.EditDetailsRequiredMessage_gst}"/>
+                    <p:outputLabel value="#{bundle.EditDetailsLabel_hst}" for="hst" />
+                    <p:inputText id="hst" value="#{detailsAction.current.hst}" title="#{bundle.EditDetailsTitle_hst}" required="true" requiredMessage="#{bundle.EditDetailsRequiredMessage_hst}"/>
+                    <p:outputLabel value="#{bundle.EditBooksLabel_dateRemoved}" for="dateRemoved" />
+                    <p:calendar id="dateRemoved" value="#{detailsAction.current.dateRemoved}" pattern="dd/MM/yyyy"/>
+                </h:panelGrid>
+                <p:commandButton action="#{detailsAction.update}" value="#{bundle.EditDetailsSaveLink}" update=":main :messagePanel" icon="ui-icon-disk" />
+                &nbsp;
+                <p:commandButton action="#{detailsAction.prepareView}" value="#{bundle.EditDetailsViewLink}" ajax="false" />
+                <br />
+                <br />
+                <p:commandButton action="#{detailsAction.prepareList}" value="#{bundle.EditDetailsShowAllLink}" immediate="true" ajax="false" />
+                <br />
+                <br />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

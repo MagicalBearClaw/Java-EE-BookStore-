@@ -1,0 +1,314 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- Author: Philip -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template/management.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Sales Reports"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form id="main" styleClass="jsfcrud_list_form">
+                <ul>
+                    <li>
+                        <p:commandLink value="Total" update="forms">
+                            <f:param name="type_string" value="total" />
+                        </p:commandLink>
+                    </li>
+                   <!-- <li>
+                        <p:commandLink value="Client" update="forms">
+                            <f:param name="type_string" value="client" />
+                        </p:commandLink>
+                    </li>
+                    <li>
+                        <p:commandLink value="Publisher" update="forms">
+                            <f:param name="type_string" value="publisher" />
+                        </p:commandLink>
+                    </li>
+                    <li>
+                        <p:commandLink value="Author" update="forms">
+                            <f:param name="type_string" value="author" />
+                        </p:commandLink>
+                    </li><!-->
+                    <li>
+                        <p:commandLink value="Best Sellers" update="forms">
+                            <f:param name="type_string" value="bestSellers" />
+                        </p:commandLink>
+                    </li>
+                    <li>
+                        <p:commandLink value="Best Clients" update="forms">
+                            <f:param name="type_string" value="bestClients" />
+                        </p:commandLink>
+                    </li>
+                    <li>
+                        <p:commandLink value="Zero" update="forms">
+                            <f:param name="type_string" value="zero" />
+                        </p:commandLink>
+                    </li>
+                </ul>
+                <br/>
+                <h:panelGroup id="forms">
+                    <ui:fragment rendered="#{report.authorVisible}">
+                        <ul>
+                            <li><p:outputLabel for="fill_author" value="#{report.type}"/>
+                                <p:selectOneMenu id="fill_author" value="#{report.searchValue}">
+                                    <p:ajax event="change" update="@this" />
+                                    <f:selectItems value="#{report.autofill}" />
+                                </p:selectOneMenu>
+                            </li>
+                            <li>  <p:outputLabel for="popup1" value="Start Date"/>
+                                <p:calendar id="popup1" value="#{report.date3}" />
+                            </li>
+                            <li> <p:outputLabel for="popup2" value="End Date" />
+                                <p:calendar id="popup2" value="#{report.date4}" />
+                            </li>
+                            <li>
+                                <p:commandButton value="Submit" update="author_reports"
+                                               styleClass="btn btn-default" type="submit">
+                                    <f:param name="type_string" value="#{report.type}" />
+                                     <f:param name="submitted_val" value="true" />
+                                     <f:param name="type_value" value="#{report.searchValue}" />
+                                </p:commandButton>
+                            </li>
+                        </ul>
+                    <p:dataTable id="author_reports" value="#{report.reports}" var="item" paginator="true"
+                                 rowKey="#{item.isbn}"
+                                 rows="20"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 rendered="true">
+                        <p:column headerText="Name" style="width:1em;">
+                            <h:outputText value="#{item.type}"/>
+                        </p:column>
+                        <p:column headerText="Date" style="width:1em;">
+                            <h:outputText value="#{item.date}"/>
+                        </p:column>
+                        <p:column headerText="Total Sales" style="width:1em;">
+                            <h:outputText value="$#{item.total}"/>
+                        </p:column>
+                    </p:dataTable>
+                    </ui:fragment>
+                    <ui:fragment rendered="#{report.totalVisible}">
+                        <ul>
+                            <li>
+                                <p:outputLabel for="popup3" value="Start Date"/>
+                                <p:calendar id="popup3" value="#{report.date1}" />
+                            </li>
+                            <li>
+                                <p:outputLabel for="popup4" value="End Date" />
+                                <p:calendar id="popup4" value="#{report.date2}" />
+                            </li>
+                            <li>
+                                 <p:commandButton value="Submit" update="total_reports"
+                                                  styleClass="btn btn-default" type="submit" >
+                                    <f:param name="type_string" value="#{report.type}" />
+                                     <f:param name="submitted_val" value="true" />
+                                </p:commandButton>
+                            </li>
+                        </ul>
+                  <p:dataTable id="total_reports" value="#{report.reports}" var="item" paginator="true"
+                                 rowKey="#{item.isbn}"
+                                 rows="20"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 rendered="true">
+                        <p:column headerText="Name" style="width:1em;">
+                            <h:outputText value="#{item.type}"/>
+                        </p:column>
+                        <p:column headerText="Date" style="width:1em;">
+                            <h:outputText value="#{item.date}"/>
+                        </p:column>
+                        <p:column headerText="Total Sales" style="width:1em;">
+                            <h:outputText value="$#{item.total}"/>
+                        </p:column>
+                    </p:dataTable>
+                  </ui:fragment>
+                 <ui:fragment rendered="#{report.publisherVisible}">
+                        <ul>
+                            <li><p:outputLabel for="fill_publisher" value="#{report.type}"/>
+                                <p:selectOneMenu id="fill_publisher" value="#{report.searchValue}">
+                                    <p:ajax event="change" update="@this" />
+                                    <f:selectItems value="#{report.autofill}" />
+                                </p:selectOneMenu>
+                            </li>
+                            <li>  <p:outputLabel for="popup5" value="Start Date"/>
+                                <p:calendar id="popup5" value="#{report.date3}" />
+                            </li>
+                            <li> <p:outputLabel for="popup6" value="End Date" />
+                                <p:calendar id="popup6" value="#{report.date4}" />
+                            </li>
+                            <li>
+                                <p:commandButton value="Submit" update="publisher_reports"
+                                               styleClass="btn btn-default" type="submit">
+                                     <f:param name="type_string" value="#{report.type}" />
+                                     <f:param name="submitted_val" value="true" />
+                                      <f:param name="type_value" value="#{report.searchValue}" />
+                                </p:commandButton>
+                            </li>
+                        </ul>
+                    <p:dataTable id="publisher_reports" value="#{report.reports}" var="item" paginator="true"
+                                 rowKey="#{item.isbn}"
+                                 rows="20"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 rendered="true">
+                        <p:column headerText="Name" style="width:1em;">
+                            <h:outputText value="#{item.type}"/>
+                        </p:column>
+                        <p:column headerText="Date" style="width:1em;">
+                            <h:outputText value="#{item.date}"/>
+                        </p:column>
+                        <p:column headerText="Total Sales" style="width:1em;">
+                            <h:outputText value="$#{item.total}"/>
+                        </p:column>
+                    </p:dataTable>
+                 </ui:fragment>
+                 <ui:fragment rendered="#{report.clientVisible}">
+                        <ul>
+                            <li><p:outputLabel for="fill_client" value="#{report.type}"/>
+                                <p:selectOneMenu id="fill_client" value="#{report.searchValue}">
+                                    <p:ajax event="change" update="@this" />
+                                    <f:selectItems value="#{report.autofill}" />
+                                </p:selectOneMenu>
+                            </li>
+                            <li>  <p:outputLabel for="popup7" value="Start Date"/>
+                                <p:calendar id="popup7" value="#{report.date3}" />
+                            </li>
+                            <li> <p:outputLabel for="popup8" value="End Date" />
+                                <p:calendar id="popup8" value="#{report.date4}" />
+                            </li>
+                            <li>
+                                <p:commandButton value="Submit" update="client_reports"
+                                               styleClass="btn btn-default" type="submit"
+                                               process="@form" partialSubmit="true" ajax="true"
+                                               action="#{report.submit(report.searchValue)}">
+                                     <f:param name="type_string" value="#{report.type}" />
+                                     <f:param name="submitted_val" value="true" />
+                                      <f:param name="type_value" value="#{report.searchValue}" />
+                                </p:commandButton>
+                            </li>
+                        </ul>
+                    <p:dataTable id="client_reports" value="#{report.reports}" var="item" paginator="true"
+                                 rowKey="#{item.isbn}"
+                                 rows="20"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 rendered="true">
+                        <p:column headerText="Name" style="width:1em;">
+                            <h:outputText value="#{item.type}"/>
+                        </p:column>
+                        <p:column headerText="Date" style="width:1em;">
+                            <h:outputText value="#{item.date}"/>
+                        </p:column>
+                        <p:column headerText="Total Sales" style="width:1em;">
+                            <h:outputText value="$#{item.total}"/>
+                        </p:column>
+                    </p:dataTable>
+                  </ui:fragment>
+                    <ui:fragment rendered="#{report.topSellersVisible}">
+                        <ul>
+                            <li>
+                                <p:outputLabel for="popup9" value="Start Date"/>
+                                <p:calendar id="popup9" value="#{report.date1}" />
+                            </li>
+                            <li>
+                                <p:outputLabel for="popup10" value="End Date" />
+                                <p:calendar id="popup10" value="#{report.date2}" />
+                            </li>
+                            <li>
+                                <p:commandLink value="Submit" update="topSellers_reports"
+                                               styleClass="btn btn-default">
+                                    <f:param name="type_string" value="#{report.type}" />
+                                     <f:param name="submitted_val" value="true" />
+                                </p:commandLink>
+                            </li>
+                        </ul>
+                  <p:dataTable id="topSellers_reports" value="#{report.reports}" var="item" paginator="true"
+                                 rowKey="#{item.isbn}"
+                                 rows="20"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 rendered="true">
+                        <p:column headerText="Name" style="width:1em;">
+                            <h:outputText value="#{item.type}"/>
+                        </p:column>
+                        <p:column headerText="Count" style="width:1em;">
+                            <h:outputText value="#{item.count}"/>
+                        </p:column>
+                        <p:column headerText="Total Sales" style="width:1em;">
+                            <h:outputText value="$#{item.total}"/>
+                        </p:column>
+                    </p:dataTable>
+                  </ui:fragment>
+                 <ui:fragment rendered="#{report.topClientsVisible}">
+                        <ul>
+                            <li>
+                                <p:outputLabel for="popup11" value="Start Date"/>
+                                <p:calendar id="popup11" value="#{report.date1}" />
+                            </li>
+                            <li>
+                                <p:outputLabel for="popup12" value="End Date" />
+                                <p:calendar id="popup12" value="#{report.date2}" />
+                            </li>
+                            <li>
+                                <p:commandLink value="Submit" update="topClients_reports"
+                                               styleClass="btn btn-default">
+                                    <f:param name="type_string" value="#{report.type}" />
+                                     <f:param name="submitted_val" value="true" />
+                                </p:commandLink>
+                            </li>
+                        </ul>
+                  <p:dataTable id="topClients_reports" value="#{report.reports}" var="item" paginator="true"
+                                 rowKey="#{item.isbn}"
+                                 rows="20"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 rendered="true">
+                        <p:column headerText="Name" style="width:1em;">
+                            <h:outputText value="#{item.type}"/>
+                        </p:column>
+                        <p:column headerText="Count" style="width:1em;">
+                            <h:outputText value="#{item.count}"/>
+                        </p:column>
+                        <p:column headerText="Total Sales" style="width:1em;">
+                            <h:outputText value="$#{item.total}"/>
+                        </p:column>
+                    </p:dataTable>
+                  </ui:fragment>
+                    <ui:fragment rendered="#{report.zeroVisible}">
+                        <ul>
+                            <li>
+                                <p:outputLabel for="popup13" value="Start Date"/>
+                                <p:calendar id="popup13" value="#{report.date1}" />
+                            </li>
+                            <li>
+                                <p:outputLabel for="popup14" value="End Date" />
+                                <p:calendar id="popup14" value="#{report.date2}" />
+                            </li>
+                            <li>
+                                <p:commandLink value="Submit" update="zero_reports"
+                                               styleClass="btn btn-default">
+                                    <f:param name="type_string" value="#{report.type}" />
+                                     <f:param name="submitted_val" value="true" />
+                                </p:commandLink>
+                            </li>
+                        </ul>
+                  <p:dataTable id="zero_reports" value="#{report.reports}" var="item" paginator="false"
+                                 rowKey="#{item.isbn}"
+                                 rows="100"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 rendered="true">
+                        <p:column headerText="Name" style="width:1em;">
+                            <h:outputText value="#{item.type}"/>
+                        </p:column>
+                        <p:column headerText="Count" style="width:1em;">
+                            <h:outputText value="#{item.count}"/>
+                        </p:column>
+                        <p:column headerText="Total Sales" style="width:1em;">
+                            <h:outputText value="$#{item.total}"/>
+                        </p:column>
+                    </p:dataTable>
+                  </ui:fragment>
+                </h:panelGroup>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

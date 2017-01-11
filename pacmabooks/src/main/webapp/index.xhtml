@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- Author: Alexandre -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <f:view locale="#{localeChanger.locale}"></f:view>
+    <h:head>
+
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <meta name="description" content=""/>
+        <meta name="author" content=""/>
+
+        <title>Pacmabooks</title>
+        <!--<h:outputStylesheet name="css/jsfcrud.css"/>-->
+
+        <!-- Bootstrap Core CSS -->
+        <h:outputStylesheet name="bootstrap.css" library="css" />
+
+        <!-- Custom CSS -->
+        <h:outputStylesheet name="grayscale.css" library="css" />
+
+        <!-- Custom Fonts -->
+        <h:outputStylesheet name="css/font-awesome.css" library="font-awesome"/>
+        <h:outputStylesheet name="LoraFont.css" library="css"/>
+        <h:outputStylesheet name="Montserrat.css" library="css"/>
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    </h:head>
+
+    <h:body id="page-top">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+                    <ul class="nav navbar-nav">
+                        <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+                        <li class="hidden">
+                            <a href="#page-top"></a>
+                        </li>
+                        <li>
+                            <a class="page-scroll" href="/pacmabooks/contact.xhtml">#{bundle.Index_Contact}</a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-flag"></span>  #{bundle.Main_Template_Language}<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <h:form style="color: black">
+                                    <li style="color: black"><h:commandLink class="btn btn-link" action="#{localeChanger.frenchAction()}">#{bundle.Main_Template_French}</h:commandLink></li>
+                                    <li style="color: black"><h:commandLink class="btn btn-link" action="#{localeChanger.englishAction}">#{bundle.Main_Template_English}</h:commandLink></li>
+                                </h:form>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+            <!-- /.container -->
+        </nav>
+
+        <!-- Intro Header -->
+        <header class="intro">
+            <div class="intro-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2" style="background-color: rgba(10,10,10,0.4)">
+                            <img class="img-responsive" src="resources/images/BasicLogoWhite.png"/>
+                            <p class="intro-text">#{bundle.Index_Welcome1}<br/>#{bundle.Index_Welcome2}</p>
+                            <a href="/pacmabooks/landing.xhtml" class="btn btn-circle page-scroll">
+                                <i class="fa fa-angle-double-down animated"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- jQuery -->
+        <h:outputScript  library="js" name="jquery.js"/>
+
+        <!-- Bootstrap Core JavaScript -->
+        <h:outputScript  library="js" name="bootstrap.min.js"/>
+
+        <!-- Plugin JavaScript -->
+        <h:outputScript  library="js" name="jquery.easing.min.js"/>
+
+        <!-- Custom Theme JavaScript -->
+        <h:outputScript  library="js" name="grayscale.js"/>
+        <br />
+        <br />
+        <br />
+    </h:body>
+</html>

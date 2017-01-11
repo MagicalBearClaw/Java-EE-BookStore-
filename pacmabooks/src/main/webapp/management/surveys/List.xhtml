@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- Author: Philip -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template/management.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListSurveysTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form id="main" styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{bundle.ListSurveysEmpty}" rendered="#{surveysAction.items.rowCount == 0}"/>
+                <p:dataTable id="datalist" value="#{surveysAction.items}" var="item" widgetVar="table"
+                             paginator="true"
+                             rowKey="#{item.id}"
+                             rows="20"
+                             rowsPerPageTemplate="5,10,20,30,40,50" >
+                    <f:facet name="header">
+                        <p:outputPanel style="text-align: right;">
+                            <h:outputText value="#{bundle.SearchTitle}" />
+                            <p:inputText id="globalFilter" onkeyup="PF('table').filter()" style="width:150px" placeholder="#{bundle.SearchQuery}"/>
+                        </p:outputPanel>
+                    </f:facet>
+                    <p:column headerText="#{bundle.ListSurveysTitle_id}" sortBy="#{item.id}" style="width:4em;">
+                        <h:outputText value="#{item.id}"/>
+                    </p:column>
+                    <p:column headerText="#{bundle.ListSurveysTitle_enabled}" sortBy="#{item.enabled}" style="width:8em;">
+                        <h:outputText value="#{item.enabled}"/>
+                    </p:column>
+                    <p:column headerText="#{bundle.ListSurveysTitle_question}" sortBy="#{item.question}" filterBy="#{item.question}" filterMatchMode="contains">
+                        <h:outputText value="#{item.question}"/>
+                    </p:column>
+                    <p:column headerText="#{bundle.ListSurveysTitle_answer1}" sortBy="#{item.answer1}" filterBy="#{item.answer1}" filterMatchMode="contains">
+                        <h:outputText value="#{item.answer1}"/>
+                    </p:column>
+                    <p:column headerText="#{bundle.ListSurveysTitle_answer2}" sortBy="#{item.answer2}" filterBy="#{item.answer2}" filterMatchMode="contains">
+                        <h:outputText value="#{item.answer2}"/>
+                    </p:column>
+                    <p:column headerText="#{bundle.ListSurveysTitle_answer3}" sortBy="#{item.answer3}" filterBy="#{item.answer3}" filterMatchMode="contains">
+                        <h:outputText value="#{item.answer3}"/>
+                    </p:column>
+                    <p:column headerText="#{bundle.ListSurveysTitle_answer1Count}" sortBy="#{item.answer1Count}" style="width:12em;">
+                        <h:outputText value="#{item.answer1Count}"/>
+                    </p:column>
+                    <p:column headerText="#{bundle.ListSurveysTitle_answer2Count}" sortBy="#{item.answer2Count}" style="width:12em;">
+                        <h:outputText value="#{item.answer2Count}"/>
+                    </p:column>
+                    <p:column headerText="#{bundle.ListSurveysTitle_answer3Count}" sortBy="#{item.answer3Count}" style="width:12em;">
+                        <h:outputText value="#{item.answer3Count}"/>
+                    </p:column>
+                    <p:column style="width:9em;">
+                        <f:facet name="header">
+                            <h:outputText value="&nbsp;"/>
+                        </f:facet>
+                        <h:commandLink action="#{surveysAction.prepareView(item)}" value="#{bundle.ListSurveysViewLink}"/>
+                        <h:outputText value=" "/>
+                        <h:commandLink action="#{surveysAction.prepareEdit(item)}" value="#{bundle.ListSurveysEditLink}"/>
+                        <h:outputText value=" "/>
+                        <p:commandLink action="#{surveysAction.destroy(item)}" value="#{bundle.ListSurveysDestroyLink}" update=":main"/>
+                    </p:column>
+                </p:dataTable>
+                <br />
+                <p:commandButton action="#{surveysAction.prepareCreate}" value="#{bundle.ListSurveysCreateLink}"/>
+                <br />
+                <br />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

@@ -1,0 +1,283 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- Author: Alexandre, Philip, Michael -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <f:view locale="#{localeChanger.locale}"></f:view>
+    <h:head>
+        <meta charset="UTF-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <title><ui:insert name="windowTitle" /></title>
+        <h:outputStylesheet name="bootstrap.css" library="css" />
+        <h:outputStylesheet name="bootstrap-theme.css" library="css" />
+        <h:outputStylesheet name="star-rating.min.css" library="css" />
+        <h:outputStylesheet name="loginDrop.css" library="css" />
+        <h:outputStylesheet name="carouSlider.css" library="css" />
+        <h:outputStylesheet name="invoiceStyle.css" library="css" />
+    </h:head>
+    <h:body>
+        <nav class="navbar navbar-default">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/pacmabooks/landing.xhtml">PACMABOOKS</a>
+                </div>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/pacmabooks/contact.xhtml">#{bundle.Main_Template_Contact}</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">#{bundle.Main_Template_Genre}<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <h:form>
+                                    <li><h:commandLink styleClass="btn btn-link" action="#{main.submitGenre('Fantasy')}">#{bundle.Main_Template_Genre1}</h:commandLink></li>
+                                    <li><h:commandLink styleClass="btn btn-link" action="#{main.submitGenre('Romance')}">#{bundle.Main_Template_Genre2}</h:commandLink></li>
+                                    <li><h:commandLink styleClass="btn btn-link" action="#{main.submitGenre('Horror')}">#{bundle.Main_Template_Genre3}</h:commandLink></li>
+                                    <li><h:commandLink styleClass="btn btn-link" action="#{main.submitGenre('Science Fiction')}">#{bundle.Main_Template_Genre4}</h:commandLink></li>
+                                    <li><h:commandLink styleClass="btn btn-link" action="#{main.submitGenre('Mystery')}">#{bundle.Main_Template_Genre5}</h:commandLink></li>
+                                </h:form>
+                            </ul>
+                        </li>
+                    </ul>
+                    <h:form class="navbar-form navbar-left" role="search">
+                        <div class="form-group">
+                            <!--<input type="text" class="form-control" placeholder="Search"/>-->
+                            <h:inputText id="input" value="#{main.searchString}" class="form-control" style="width: 120px"/>
+                        </div>
+                        <!--<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span> </button>-->
+                        <h:commandButton styleClass="btn btn-default" action="#{main.submit(main)}" value="#{bundle.Main_Template_Search}"></h:commandButton>
+                    </h:form>
+                    <ul class="nav navbar-nav navbar-right">
+
+                        <li><a href="#shopModal" data-toggle="modal" data-target="#shopModal"><span data-toggle="modal" data-target="#shopModal" class="glyphicon glyphicon-shopping-cart"></span> #{bundle.Main_Template_Cart}</a></li>
+                        <h:panelGroup rendered="#{!authenticationBackingBean.authenthicated}">
+                            <li><a href="register.xhtml"><span class="glyphicon glyphicon-log-in"></span> #{bundle.Main_Template_Register}</a></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> #{bundle.Main_Template_Login}<span class="caret"></span></a>
+                                <ul id="login-dp" class="dropdown-menu">
+                                    <li>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <p class="text-muted" style="margin-bottom: 0.5em">#{bundle.Main_Template_Login}</p>
+                                                <h:form styleClass="form" id="login-nav">
+                                                    <div class="form-group">
+                                                        <h:outputText value="#{bundle.Main_Template_Email}" styleClass="only"/>
+                                                        <h:inputText id = "email" validator="#{authenticationBackingBean.validateUSerName}" required="true" requiredMessage="Email" value="#{authenticationBackingBean.email}" styleClass="form-control">
+
+                                                        </h:inputText>
+
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <h:outputText value="#{bundle.Main_Template_Password}" styleClass="only"/>
+                                                        <h:inputSecret id = "password" requiredMessage="Pass" value="#{authenticationBackingBean.password}" styleClass="form-control">
+                                                        </h:inputSecret>
+                                                    </div>
+                                                    <h:message for="email" style="color:red" />
+                                                    <div class="form-group">
+                                                        <h:commandButton  styleClass="btn btn-primary btn-block" value="#{bundle.Main_Template_SignIn}" action="#{authenticationBackingBean.login}">
+                                                        </h:commandButton>
+                                                    </div>
+                                                </h:form>
+                                            </div>
+                                            <div class="bottom text-center">
+                                                #{bundle.Main_Template_NewUserMessage} <a href="register.xhtml"><b>#{bundle.Main_Template_JoinMessage}</b></a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                        </h:panelGroup>
+                        <h:panelGroup rendered="#{authenticationBackingBean.authenthicated}">
+
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span>#{bundle.Main_Template_Acc}<span class="caret"></span></a>
+                                <ul class="dropdown-menu">                             
+                                    <li><h:outputLink styleClass="btn btn-link" rendered="#{authenticationBackingBean.manager}" value="/pacmabooks/management/dash.xhtml"><span class="glyphicon glyphicon-edit"/>#{bundle.Main_Template_Management}</h:outputLink></li>
+                                    <li><h:outputLink styleClass="btn btn-link" value="/pacmabooks/profile/download.xhtml"><span class="glyphicon glyphicon-edit"/>#{bundle.Main_Template_download}</h:outputLink></li>
+                                    <li><h:form>
+                                            <h:commandLink action="#{authenticationBackingBean.logout()}" styleClass="btn btn-link">
+                                                <span class="glyphicon glyphicon-log-out"></span> #{bundle.Main_Template_SignOut}
+                                            </h:commandLink>
+                                        </h:form>
+                                    </li>
+                                </ul>
+                            </li>
+                        </h:panelGroup>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-flag"></span>  #{bundle.Main_Template_Language}<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <h:form>
+                                    <li><h:commandLink class="btn btn-link" action="#{localeChanger.frenchAction()}">#{bundle.Main_Template_French}</h:commandLink></li>
+                                    <li><h:commandLink class="btn btn-link" action="#{localeChanger.englishAction}">#{bundle.Main_Template_English}</h:commandLink></li>
+                                </h:form>
+                            </ul>
+                        </li>
+                        <li><a href="/pacmabooks/faq.xhtml"><span class="glyphicon glyphicon-question-sign"></span> #{bundle.Main_Template_Faq}</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="container" style="min-height: 797px;">
+            <div class="row">
+                <div class="col-md-4">
+                    <img class="img-responsive" src="#{resource['images/BasicLogo.png']}"/>
+                </div>
+                <div class="col-md-offset-2 col-md-6">
+                    <h4 class="text-center">#{bundle.Main_Template_News}</h4>
+                    <div class="panel-group" style="height: 250px; overflow-y: scroll">
+                        <!--<p class="text-info">Welcome to Pacmabooks, We hope you'll find all the content you are looking for.</p>-->
+                        <p:feedReader value="#{rssBackingBean.rss.url}" var="feed">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">#{feed.title}</div>
+                                <div class="panel-body">
+                                    <h:outputText styleClass="text-muted text-justify" value="#{feed.description.value}" escape="false"/>
+                                </div>
+                            </div>
+                        </p:feedReader>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <h:graphicImage class="img-responsive" value="#{main.getBannerAdForSlot(1)}" />
+                </div>
+            </div>
+            <ui:insert name="content"/>
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <h:graphicImage class="img-responsive" value="#{main.getBannerAdForSlot(2)}"/>
+                </div>
+            </div>
+            <br/>
+        </div>
+        <footer style="background-color: rgba(10,10,10,0.1); padding-top: 2em; padding-bottom: 2em">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-offset-4 col-md-4 col-xs-6 col-xs-offset-3">
+                        <p class="text-muted text-center">
+                            &copy; Dawson College Computer Science program - G5W16
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!--Modal stuff-->
+        <div id="shopModal" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">#{bundle.Cart_Title}</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="table-responsive">
+                            <table id="cart" class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>#{bundle.Cart_Product}</th>
+                                        <th>#{bundle.Cart_Quantity}</th>
+                                        <th class="text-center">#{bundle.Cart_Price}</th>
+                                        <th class="text-center">Total</th>
+                                        <th> </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ui:fragment rendered="#{!shoppingCart.isEmpty()}">
+                                        <ui:repeat varStatus="status" value="#{shoppingCart.products}" var="CartProduct">
+                                            <tr>
+                                                <td class="col-sm-8 col-md-6">
+                                                    <div class="media">
+                                                        <h:form>
+                                                            <h:commandLink action="#{product.show(CartProduct.book.isbn)}" styleClass="thumbnail pull-left">
+                                                                <h:graphicImage styleClass="media-object" value="/resources/img/covers/#{CartProduct.book.isbn}.jpg" style="max-height: 100px; width: auto; height: auto;"/>
+                                                            </h:commandLink>
+                                                        </h:form>
+                                                        <div class="media-body">
+
+                                                            <h4 class="media-heading"><a href="#">#{CartProduct.book.title}</a></h4>
+                                                            <h5 class="media-heading"> #{bundle.Cart_By} <a href="#">#{CartProduct.book.author}</a></h5>
+                                                            <span>#{bundle.Cart_Status} </span><span class="text-success"><strong>#{bundle.Cart_Available} #{CartProduct.book.formats}</strong></span>
+
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="col-sm-1 col-md-1" style="text-align: center">
+
+                                                    <h:inputText value="1" styleClass="form-control" id = "quantity" disabled="true">
+                                                    </h:inputText>
+
+                                                </td>
+                                                <td class="col-sm-1 col-md-1 text-center"><strong>$#{CartProduct.priceProduct}</strong></td>
+                                                <td id ="subTotal" class="col-sm-1 col-md-1 text-center"><strong>$#{CartProduct.getPriceProduct()}</strong></td>
+                                                <td class="col-sm-1 col-md-1">
+                                                    <h:form>
+
+                                                        <h:commandLink action="#{shoppingCart.removeProduct(CartProduct.book.isbn)}" styleClass="btn btn-danger">
+                                                            <span class="glyphicon glyphicon-remove"></span> #{bundle.Cart_Remove}
+                                                        </h:commandLink>
+                                                    </h:form>
+                                                </td>
+                                            </tr>
+                                        </ui:repeat>
+                                    </ui:fragment>
+                                    <ui:fragment rendered="#{shoppingCart.isEmpty()}">
+                                        <h3 class="text-center text-info">#{bundle.Cart_Request_Item}</h3>
+                                    </ui:fragment>
+                                    <tr>
+                                        <td>   </td>
+                                        <td>   </td>
+                                        <td>   </td>
+                                        <td><h5>#{bundle.Cart_Subtotal}</h5></td>
+                                        <td class="text-right"><h5><strong>$#{shoppingCart.priceTotal}</strong></h5></td>
+                                    </tr>
+                                    <tr>
+                                        <td>   </td>
+                                        <td>   </td>
+                                        <td>   </td>
+                                        <td><h3>Total</h3></td>
+                                        <td id = "total" class="text-right"><h3><strong>$#{shoppingCart.priceTotal}</strong></h3></td>
+                                    </tr>
+                                    <tr>
+                                        <td>   </td>
+                                        <td>   </td>
+                                        <td>   </td>
+                                        <td>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                                <span class="glyphicon glyphicon-shopping-cart"></span> #{bundle.Cart_Continue_Shopping}
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <h:form>
+                                                <h:commandLink action="#{shoppingCart.redirectCheckoutUrl}" styleClass="btn btn-success">
+                                                    #{bundle.Cart_Checkout} <span class="glyphicon glyphicon-play"></span>
+                                                </h:commandLink>
+                                            </h:form>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h:outputScript library="primefaces" name="jquery/jquery.js" />
+
+        <!-- Bootstrap Core JavaScript -->
+        <h:outputScript  library="js" name="bootstrap.min.js"/>
+
+        <!-- Star rating -->
+        <h:outputScript  library="js" name="star-rating.min.js"/>
+    </h:body>
+</html>

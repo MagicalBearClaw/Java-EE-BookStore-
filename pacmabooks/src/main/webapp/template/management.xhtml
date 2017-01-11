@@ -1,0 +1,127 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- Author: Philip, Alexandre, Michael -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <f:view locale="#{localeChanger.locale}"></f:view>
+    <h:head>
+        <meta charset="UTF-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <title><ui:insert name="title" /></title>
+        <h:outputStylesheet name="bootstrap.css" library="css" />
+        <h:outputStylesheet name="bootstrap-theme.css" library="css" />
+        <h:outputStylesheet name="star-rating.min.css" library="css" />
+        <h:outputStylesheet name="loginDrop.css" library="css" />
+        <h:outputStylesheet name="carouSlider.css" library="css" />
+        <h:outputStylesheet name="style.css" library="css" />
+        <h:outputStylesheet name="jsfcrud.css" library="css" />
+    </h:head>
+    <h:body>
+        <nav class="navbar navbar-default">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/pacmabooks/landing.xhtml">PACMABOOKS</a>
+                </div>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <h:form class="navbar-form navbar-left" role="search">
+                        <li><h:outputLink styleClass="btn btn-link" rendered="true" value="/pacmabooks/management/dash.xhtml"><span class="glyphicon glyphicon-dashboard"/> #{bundle.Main_Template_Dash}</h:outputLink></li>
+                    </h:form>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><h:outputLink styleClass="btn btn-link" rendered="true" value="/pacmabooks/landing.xhtml"><span class="glyphicon glyphicon-th"/> #{bundle.Main_Template_Client}</h:outputLink></li>
+                        <h:panelGroup rendered="#{!authenticationBackingBean.authenthicated}">
+                            <li><a href="register.xhtml"><span class="glyphicon glyphicon-log-in"></span> #{bundle.Main_Template_Register}</a></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> #{bundle.Main_Template_Login}<span class="caret"></span></a>
+                                <ul id="login-dp" class="dropdown-menu">
+                                    <li>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <p class="text-muted" style="margin-bottom: 0.5em">#{bundle.Main_Template_Login}</p>
+                                                <h:form styleClass="form" id="login-nav">
+                                                    <div class="form-group">
+                                                        <h:outputText value="#{bundle.Main_Template_Email}" styleClass="only"/>
+                                                        <h:inputText id = "email" required="true" requiredMessage="Email" value="#{authenticationBackingBean.email}" styleClass="form-control">
+                                                        </h:inputText>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <h:outputText value="#{bundle.Main_Template_Password}" styleClass="only"/>
+                                                        <h:inputSecret id = "password" requiredMessage="Pass" value="#{authenticationBackingBean.password}" styleClass="form-control">
+                                                        </h:inputSecret>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <h:commandButton styleClass="btn btn-primary btn-block" value="#{bundle.Main_Template_SignIn}" action="#{authenticationBackingBean.login()}"/>
+                                                    </div>
+                                                </h:form>
+                                            </div>
+                                            <div class="bottom text-center">
+                                                #{bundle.Main_Template_NewUserMessage} <a href="register.xhtml"><b>#{bundle.Main_Template_JoinMessage}</b></a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                        </h:panelGroup>
+                        <h:panelGroup rendered="#{authenticationBackingBean.authenthicated}">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span>#{bundle.Main_Template_Acc}<span class="caret"></span></a>
+                                <ul class="dropdown-menu">                            
+                                    <li><h:outputLink styleClass="btn btn-link" value="/pacmabooks/profile/download.xhtml"><span class="glyphicon glyphicon-edit"/>#{bundle.Main_Template_download}</h:outputLink></li>
+                                    <li><h:form>
+                                            <h:commandLink action="#{authenticationBackingBean.logout()}" styleClass="btn btn-link">
+                                                <span class="glyphicon glyphicon-log-out"></span> #{bundle.Main_Template_SignOut}
+                                            </h:commandLink>
+                                        </h:form>
+                                    </li>
+                                </ul>
+                            </li>
+                        </h:panelGroup>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-flag"></span>  #{bundle.Main_Template_Language}<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <h:form>
+                                    <li><h:commandLink class="btn btn-link" action="#{localeChanger.frenchAction()}">#{bundle.Main_Template_French}</h:commandLink></li>
+                                    <li><h:commandLink class="btn btn-link" action="#{localeChanger.englishAction}">#{bundle.Main_Template_English}</h:commandLink></li>
+                                </h:form>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="container, panel-heading">
+            <h1><ui:insert name="title" /></h1>
+        </div>
+        <div class="container-fluid">
+            <ui:insert name="body" />
+        </div>
+        <footer style="background-color: rgba(10,10,10,0.1); padding-top: 2em; padding-bottom: 2em">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-offset-4 col-md-4 col-xs-6">
+                        <p class="text-muted text-center">
+                            &copy; Dawson College Computer Science program - G5W16
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+
+
+        <!-- Bootstrap Core JavaScript -->
+        <h:outputScript  library="js" name="bootstrap.min.js"/>
+
+        <!-- Star rating -->
+        <h:outputScript  library="js" name="star-rating.min.js"/>
+    </h:body>
+</html>

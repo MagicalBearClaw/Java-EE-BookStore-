@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- Author: Philip -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template/management.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewSurveysTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:outputStylesheet name="view.css" library="css" />
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewSurveysLabel_id}"  style="font-weight:bold"/>
+                    <h:outputText value="#{surveysAction.current.id}" title="#{bundle.ViewSurveysTitle_id}"/>
+                    <h:outputText value="#{bundle.ViewSurveysLabel_enabled}"  style="font-weight:bold"/>
+                    <h:outputText value="#{surveysAction.current.enabled}" title="#{bundle.ViewSurveysTitle_enabled}"/>
+                    <h:outputText value="#{bundle.ViewSurveysLabel_question}"  style="font-weight:bold"/>
+                    <h:outputText value="#{surveysAction.current.question}" title="#{bundle.ViewSurveysTitle_question}"/>
+                    <h:outputText value="#{bundle.ViewSurveysLabel_answer1}"  style="font-weight:bold"/>
+                    <h:outputText value="#{surveysAction.current.answer1}" title="#{bundle.ViewSurveysTitle_answer1}"/>
+                    <h:outputText value="#{bundle.ViewSurveysLabel_answer2}"  style="font-weight:bold"/>
+                    <h:outputText value="#{surveysAction.current.answer2}" title="#{bundle.ViewSurveysTitle_answer2}"/>
+                    <h:outputText value="#{bundle.ViewSurveysLabel_answer3}"  style="font-weight:bold"/>
+                    <h:outputText value="#{surveysAction.current.answer3}" title="#{bundle.ViewSurveysTitle_answer3}"/>
+                    <h:outputText value="#{bundle.ViewSurveysLabel_answer1Count}"  style="font-weight:bold"/>
+                    <h:outputText value="#{surveysAction.current.answer1Count}" title="#{bundle.ViewSurveysTitle_answer1Count}"/>
+                    <h:outputText value="#{bundle.ViewSurveysLabel_answer2Count}"  style="font-weight:bold"/>
+                    <h:outputText value="#{surveysAction.current.answer2Count}" title="#{bundle.ViewSurveysTitle_answer2Count}"/>
+                    <h:outputText value="#{bundle.ViewSurveysLabel_answer3Count}"  style="font-weight:bold"/>
+                    <h:outputText value="#{surveysAction.current.answer3Count}" title="#{bundle.ViewSurveysTitle_answer3Count}"/>
+                </h:panelGrid>
+                <br />
+                <p:commandButton action="#{surveysAction.destroyAndView}" value="#{bundle.ViewSurveysDestroyLink}" ajax="false" />
+                &nbsp;
+                <p:button outcome="Edit" value="#{bundle.ViewSurveysEditLink}"/>
+                <br />
+                <br />
+                <p:commandButton action="#{surveysAction.prepareCreate}" value="#{bundle.ViewSurveysCreateLink}" ajax="false" />
+                &nbsp;
+                <p:commandButton action="#{surveysAction.prepareList}" value="#{bundle.ViewSurveysShowAllLink}" ajax="false" />
+                <br />
+                <br />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

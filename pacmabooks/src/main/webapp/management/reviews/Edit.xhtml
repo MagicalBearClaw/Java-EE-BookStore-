@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- Author: Philip -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template/management.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditReviewsTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form id="main">
+                <h:panelGrid columns="2">
+                    <h:panelGrid columns="2">
+                        <p:outputLabel value="#{bundle.EditReviewsLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{reviewsAction.current.id}" title="#{bundle.EditReviewsTitle_id}" required="true" requiredMessage="#{bundle.EditReviewsRequiredMessage_id}"/>
+                        <p:outputLabel value="#{bundle.EditReviewsLabel_reviewDate}" for="reviewDate" />
+                        <p:calendar id="reviewDate" pattern="MM/dd/yyyy" value="#{reviewsAction.current.reviewDate}" title="#{bundle.EditReviewsTitle_reviewDate}" />
+                        <p:outputLabel value="#{bundle.EditReviewsLabel_rating}" for="rating" />
+                        <p:inputText id="rating" value="#{reviewsAction.current.rating}" title="#{bundle.EditReviewsTitle_rating}" required="true" requiredMessage="#{bundle.EditReviewsRequiredMessage_rating}"/>
+                        <p:outputLabel value="#{bundle.EditReviewsLabel_status}" for="status" />
+                        <h:selectOneMenu id="status" value="#{reviewsAction.current.status}">
+                            <f:selectItem itemLabel="Pending" itemValue="P" />
+                            <f:selectItem itemLabel="Accepted" itemValue="A" />
+                        </h:selectOneMenu>
+                    </h:panelGrid>
+                    <h:panelGrid columns="2">
+                        <p:outputLabel value="#{bundle.EditReviewsLabel_text}" for="text" />
+                        <p:inputTextarea rows="4" cols="30" id="text" value="#{reviewsAction.current.text}" title="#{bundle.EditReviewsTitle_text}" required="true" requiredMessage="#{bundle.EditReviewsRequiredMessage_text}" />
+                    </h:panelGrid>
+                </h:panelGrid>
+                <p:commandButton action="#{reviewsAction.update}" value="#{bundle.EditReviewsSaveLink}" update=":main :messagePanel" icon="ui-icon-disk" />
+                &nbsp;
+                <p:commandButton action="#{reviewsAction.prepareView}" value="#{bundle.EditReviewsViewLink}" ajax="false" />
+                <br />
+                <br />
+                <p:commandButton action="#{reviewsAction.prepareList}" value="#{bundle.EditReviewsShowAllLink}" immediate="true" ajax="false" />
+                <br />
+                <br />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

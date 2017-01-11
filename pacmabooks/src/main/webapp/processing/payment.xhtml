@@ -1,0 +1,114 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- Author: Michael; Alexandre -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template/main.xhtml">
+        <ui:define name="windowTitle">
+            #{bundle.Page_Payment}
+        </ui:define>
+        <ui:define name="content">
+            <div class ="col-md-12">
+                <h1 class="text-success">#{bundle.Page_Payment}</h1>
+                <br/>
+                <h:form>
+                    <p:panel header="Billing information">
+                        <h:panelGrid columns="1">
+                            <h:message for="fName" style="color:red"/>
+                            <h:message for="lName" style="color:red"/>  
+                            <h:message for="address" style="color:red"/>
+                            <h:message for="company" style="color:red"/>
+                            <h:message for="city" style="color:red"/>
+                            <h:message for="province" style="color:red"/>
+                            <h:message for="country" style="color:red"/>
+                            <h:message for="postalCode" style="color:red"/>
+                            <h:message for="homePhone" style="color:red"/>
+                            <h:message for="fullName" style="color:red"/>
+                        </h:panelGrid>
+                        <br/>
+                        <h:panelGrid columns="2" >
+                            <p:outputLabel for="fName" value="#{bundle.Register_First_Name}: " /> 
+                            <p:inputText id ="fName" validatorMessage="* #{bundle.firstName_validation_message}">
+                                <f:validateLength minimum="1" maximum="25"/>
+                            </p:inputText>
+                            <p:outputLabel for="lName" value="#{bundle.Register_Last_Name}: " /> 
+                            <p:inputText id ="lName" validatorMessage="* #{bundle.lastName_validation_message}">
+                                <f:validateLength minimum="1" maximum="25"/>
+                            </p:inputText>
+                            <p:outputLabel for="address" value="#{bundle.Register_Address1}: " /> 
+                            <p:inputText id ="address" validatorMessage="* #{bundle.address_validation_message}">
+                                <f:validateLength minimum="1" maximum="25"/>
+                            </p:inputText>
+                            <p:outputLabel  for="company" value="#{bundle.Register_Company_Name}: " />                      
+                            <p:inputText id = "company" validatorMessage="* #{bundle.company_validation_message}">
+                                <f:validateLength minimum="1" maximum="20" />
+                            </p:inputText>
+                            
+                            
+                            <p:outputLabel for="city" value="#{bundle.Register_City}: " />        
+                            <p:inputText validatorMessage="* #{bundle.city_validation_message}" id ="city">
+                                <f:validateLength minimum="1" maximum="40" />
+                            </p:inputText>
+                            
+                            <p:outputLabel for="province" value="#{bundle.Register_Province}: " />        
+                            <p:inputText validatorMessage="* #{bundle.province_validation_message}" id = "province">
+                                <f:validateLength minimum="1" maximum="25" />
+                            </p:inputText>
+                            
+                            <p:outputLabel for="country" value="#{bundle.Register_Country}: " />        
+                            <p:inputText validatorMessage="* #{bundle.country_validation_message}" id = "country">
+                                <f:validateLength minimum="1" maximum="25" />
+                            </p:inputText>
+                            
+                            <p:outputLabel for="postalCode" value="#{bundle.Register_Postal}: " />               
+                            <p:inputText id="postalCode" validatorMessage="* #{bundle.postalCode_validation_message}">
+                                <f:validateRegex pattern="^[a-zA-Z]{1}[0-9]{1}[a-zA-Z]{1}(\-| |){1}[0-9]{1}[a-zA-Z]{1}[0-9]{1}$" />
+                            </p:inputText>
+                                
+                            <p:outputLabel for="homePhone" value="#{bundle.Register_Home_Telephone}: " />
+                            <p:inputMask id="homePhone" validatorMessage="* #{bundle.phone_validation_message}" mask="(999) 999-9999">
+                                <f:validateRegex pattern="^\(\d{3}\) ?\d{3}( |-)?\d{4}|^\d{3}( |-)?\d{3}( |-)?\d{4}" />
+                            </p:inputMask>
+                            
+                            <p:outputLabel for="cellphone" value="#{bundle.Register_Mobile_Telephone}: "/>
+                            <p:inputMask id="cellphone" mask="(999) 999-9999" validatorMessage="* #{bundle.phone_validation_message}">
+                                <f:validateRegex pattern="^$|^\(\d{3}\) ?\d{3}( |-)?\d{4}|^\d{3}( |-)?\d{3}( |-)?\d{4}" />
+                            </p:inputMask>
+                        </h:panelGrid>
+                    </p:panel>
+                    <br/>
+                    <p:panel header="Credit card information">
+                            <h:panelGrid columns="1">
+                            </h:panelGrid>
+                        <h:panelGrid columns="2" cellpadding="15" cellspacing="14">                 
+                                <p:outputLabel for = "ccType" value="#{bundle.Payment_credit_card_type}  "/>
+                                <p:selectOneMenu  id ="ccType" value="#{paymentBackBean.creditCardType}">
+                                    <f:selectItems value="#{paymentBackBean.creditCardTypes}"/>
+                                    <p:ajax listener="#{paymentBackBean.changeCreditCardType()}" />
+                                </p:selectOneMenu>
+                                
+                                <p:outputLabel for="fullName" value = "#{bundle.Payment_Card_Holder}: " /> 
+                                <p:inputText id ="fullName" validatorMessage="* #{bundle.Payment_card_holder_error}">
+                                     <f:validateLength minimum="1" maximum="51"/>
+                                </p:inputText>
+                                
+                                <p:outputLabel for="number" value="#{bundle.Payment_crdit_card_number}  "/>
+                                <p:inputText id="number" validator="#{paymentBackBean.validateCreditCard}" styleClass="form-control" required="true" requiredMessage="#{bundle.Payment_required}" value="#{paymentBackBean.number}"/>
+                                
+                                <p:outputLabel for="date" value="Date: " />
+                                <p:inputMask validator="#{paymentBackBean.validateDate}" id="date" mask="99/9999"/>
+                        </h:panelGrid>       
+                    </p:panel>
+                    <br/>
+                        <h:commandButton value="#{bundle.Payment_pay_now}" action="#{paymentBackBean.pay()}" class="btn btn-primary"/> 
+                        
+                </h:form>  
+               <br/>
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>

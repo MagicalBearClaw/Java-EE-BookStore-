@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- Author: Philip -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template/management.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewInvoicesTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:outputStylesheet name="view.css" library="css" />
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewInvoicesLabel_id}"  style="font-weight:bold"/>
+                    <h:outputText value="#{invoicesAction.current.id}" title="#{bundle.ViewInvoicesTitle_id}"/>
+                    <h:outputText value="#{bundle.ViewInvoicesLabel_saleDate}"  style="font-weight:bold"/>
+                    <h:outputText value="#{invoicesAction.current.saleDate}" title="#{bundle.ViewInvoicesTitle_saleDate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                    <h:outputText value="#{bundle.ViewInvoicesLabel_netValue}"  style="font-weight:bold"/>
+                    <h:outputText value="#{invoicesAction.current.netValue}" title="#{bundle.ViewInvoicesTitle_netValue}"/>
+                    <h:outputText value="#{bundle.ViewInvoicesLabel_grossValue}"  style="font-weight:bold"/>
+                    <h:outputText value="#{invoicesAction.current.grossValue}" title="#{bundle.ViewInvoicesTitle_grossValue}"/>
+                    <h:outputText value="#{bundle.ViewInvoicesLabel_clientId}"  style="font-weight:bold"/>
+                    <h:outputText value="#{invoicesAction.current.clientId.id}" title="#{bundle.ViewInvoicesTitle_clientId}"/>
+                    <h:outputText value="#{bundle.ViewBooksLabel_dateRemoved}" style="font-weight:bold"/>
+                    <h:outputText value="#{invoicesAction.current.dateRemoved}" title="#{bundle.ViewBooksTitle_dateRemoved}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                </h:panelGrid>
+                <br />
+                <p:button outcome="Edit" value="#{bundle.ViewInvoicesEditLink}"/>
+                &nbsp;
+                <p:commandButton action="#{detailsAction.prepareList(invoicesAction.current)}" value="#{bundle.ListInvoicesDetailsLink}" ajax="false" />
+                <br />
+                <br />
+                <p:commandButton action="#{invoicesAction.prepareList}" value="#{bundle.ViewInvoicesShowAllLink}" ajax="false" />
+                <br />
+                <br />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

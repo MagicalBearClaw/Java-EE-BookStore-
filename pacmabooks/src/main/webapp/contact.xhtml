@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- Author: Alexandre -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="template/main.xhtml">
+        <ui:define name="windowTitle">
+            #{bundle.Page_Contact}
+        </ui:define>
+        <ui:define name="content">
+            <div id="contact_form" class="row">
+                <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
+                    <h2>#{bundle.Contact_Review_Title}</h2>
+                    <p>#{bundle.Contact_Review}</p>
+                    <form role="form" id="feedbackForm">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="name" name="name" placeholder="#{bundle.Contact_Name}"/>
+                            <span class="help-block" style="display: none;">#{bundle.Contact_Name}</span>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-control" id="email" name="email" placeholder="#{bundle.Contact_Mail}"/>
+                            <span class="help-block" style="display: none;">#{bundle.Contact_Mail}</span>
+                        </div>
+                        <div class="form-group">
+                            <textarea rows="10" style="resize: none" class="form-control" id="message" name="message" placeholder="#{bundle.Contact_Message}"></textarea>
+                            <span class="help-block" style="display: none;">#{bundle.Contact_Message}</span>
+                        </div>
+                            <h:commandButton value="#{bundle.Contact_send}" type="submit" id="feedbackSubmit" class="btn btn-success btn-lg"/>
+                    </form>
+                </div><!--/span-->
+            </div><!--/row-->
+            <br/><br/>
+        </ui:define>
+    </ui:composition>
+</html>

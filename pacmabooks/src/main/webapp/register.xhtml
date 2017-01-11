@@ -1,0 +1,126 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- Author: Michael, Alexandre -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="template/main.xhtml">
+        <ui:define name='windowTitle'>
+            #{bundle.Register_Title_Top}
+        </ui:define>
+        <ui:define name="content">
+            
+       <div class ="col-md-12">
+                <h1 class="text-success">#{bundle.Register_Title_Top}</h1>
+                <br/>
+                <h:form>
+                    <p:panel header="#{bundle.Billing_Information}">
+                        <h:panelGrid columns="1">
+                            <h:message for="title" style="color:red" />
+                            <h:message for="fName" style="color:red"/>
+                            <h:message for="lName" style="color:red"/>  
+                            <h:message for="address" style="color:red"/>
+                            <h:message for="company" style="color:red"/>
+                            <h:message for="city" style="color:red"/>
+                            <h:message for="province" style="color:red"/>
+                            <h:message for="country" style="color:red"/>
+                            <h:message for="postalCode" style="color:red"/>
+                            <h:message for="homePhone" style="color:red"/>
+                            <h:message for="password" style="color:red" />
+                            <h:message for="email" style="color:red" />
+                            <h:message for="email2" style="color:red" />
+                            <h:message for="add2" style="color:red" />
+                            <h:outputText rendered="* #{registerController.emailTaken}" value="#{bundle.Register_Email_Taken}" style ="color:red"/>
+                        </h:panelGrid>
+                        <br/>
+                        <h:panelGrid columns="2"  cellpadding="10">
+                            
+                            <p:outputLabel for = "title" value = "#{bundle.Register_Title}" />
+                            <p:inputText id = "title" value="#{registerController.client.title}" validatorMessage="* #{bundle.title_validation_message}">
+                                <f:validateLength minimum="1" maximum="4" />
+                            </p:inputText>
+
+                            
+                            <p:outputLabel for="fName" value = "#{bundle.Register_First_Name}: " /> 
+                            <p:inputText id ="fName" validatorMessage="* #{bundle.firstName_validation_message}" value="#{registerController.client.firstName}">
+                                <f:validateLength minimum="1" maximum="25"/>
+                            </p:inputText>
+                            <p:outputLabel for="lName" value="#{bundle.Register_Last_Name}: " /> 
+                            <p:inputText id ="lName" validatorMessage="* #{bundle.lastName_validation_message}" value="#{registerController.client.lastName}">
+                                <f:validateLength minimum="1" maximum="25"/>
+                            </p:inputText>
+                            <p:outputLabel for="address" value="#{bundle.Register_Address1}: " /> 
+                            <p:inputText id ="address" validatorMessage="* #{bundle.address_validation_message}" value="#{registerController.client.address1}">
+                                <f:validateLength minimum="1" maximum="25"/>
+                            </p:inputText>
+                            
+                            <p:outputLabel for ="add2" value="#{bundle.Register_Address2}: "/>
+                            <p:inputText id = "add2" validatorMessage="#{bundle.address_validation_message}" value="#{registerController.client.address2}">
+                                <f:validateLength minimum="0" maximum="40" />
+                            </p:inputText>
+
+                            
+                            <p:outputLabel  for="company" value="#{bundle.Register_Company_Name}: " />                      
+                            <p:inputText id = "company" validatorMessage="* #{bundle.company_validation_message}" value="#{registerController.client.companyName}">
+                                <f:validateLength minimum="1" maximum="20" />
+                            </p:inputText>
+                            
+                            
+                            <p:outputLabel for="city" value="#{bundle.Register_City}: " />        
+                            <p:inputText validatorMessage="* #{bundle.city_validation_message}" id ="city" value="#{registerController.client.city}">
+                                <f:validateLength minimum="1" maximum="40" />
+                            </p:inputText>
+                            
+                            <p:outputLabel for="province" value="#{bundle.Register_Province}: "/>        
+                            <p:inputText validatorMessage="* #{bundle.province_validation_message}" id = "province" value="#{registerController.client.province}">
+                                <f:validateLength minimum="1" maximum="25" />
+                            </p:inputText>
+                            
+                            <p:outputLabel for="country" value="#{bundle.Register_Country}: "/>        
+                            <p:inputText validatorMessage="* #{bundle.country_validation_message}" id = "country" value="#{registerController.client.country}">
+                                <f:validateLength minimum="1" maximum="25" />
+                            </p:inputText>
+                            
+                            <p:outputLabel for="postalCode" value="#{bundle.Register_Postal}: "/>               
+                            <p:inputText id="postalCode" validatorMessage="* #{bundle.postalCode_validation_message}" value="#{registerController.client.postalCode}">
+                                <f:validateRegex pattern="^[a-zA-Z]{1}[0-9]{1}[a-zA-Z]{1}(\-| |){1}[0-9]{1}[a-zA-Z]{1}[0-9]{1}$" />
+                            </p:inputText>
+                                
+                            <p:outputLabel for="homePhone" value="#{bundle.Register_Home_Telephone}: "/>
+                            <p:inputMask id="homePhone" validatorMessage="* #{bundle.phone_validation_message}" mask="(999) 999-9999" value="#{registerController.client.homeTelephoneNumber}">
+                                <f:validateRegex pattern="^\(\d{3}\) ?\d{3}( |-)?\d{4}|^\d{3}( |-)?\d{3}( |-)?\d{4}" />
+                            </p:inputMask>
+                            
+                            <p:outputLabel for="cellphone" value="#{bundle.Register_Mobile_Telephone}: "/>
+                            <p:inputMask id="cellphone" mask="(999) 999-9999" validatorMessage="* #{bundle.phone_validation_message}" value="#{registerController.client.cellTelephoneNumber}">
+                                <f:validateRegex pattern="^$|^\(\d{3}\) ?\d{3}( |-)?\d{4}|^\d{3}( |-)?\d{3}( |-)?\d{4}" />
+                            </p:inputMask>
+                            
+                            <p:outputLabel for = "email" value="#{bundle.Register_Email}"/>
+                            <p:inputText  validatorMessage="#{bundle.email_validation_message}" id = "email" value="#{registerController.client.email}">
+                                <f:validateRegex pattern="^([0-9a-zA-Z]+[-._+&amp;])*[0-9a-zA-Z]+@([-0-9a-zA-Z]+[.])+[a-zA-Z]{2,6}$"  />
+                            </p:inputText>
+                                                        
+                            <p:outputLabel for = "password" value="#{bundle.Register_Password}"/>
+                            <p:password  feedback = "true" validatorMessage="* #{bundle.password_validation_message}" match = "password2" id = "password" label="Password 1" value="#{registerController.client.password}">
+                                    <f:validateLength minimum="8" maximum="25" />
+                            </p:password>
+                            
+                            <p:outputLabel for = "password2" value="#{bundle.Register_Password2}"/>
+                            <p:password  feedback = "true" validatorMessage="* #{bundle.password_validation_message}" id = "password2" label="Password 2" value="#{registerController.client.password}">
+                                    <f:validateLength minimum="8" maximum="25" />
+                            </p:password>
+                                                        
+                        </h:panelGrid>
+                        <br/>
+                        <h:commandButton styleClass="btn btn-default" value="#{bundle.Register_Submit}" action="#{registerController.registerClient()}"/>
+                    </p:panel>
+                    <br/>
+                </h:form>    
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>

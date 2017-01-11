@@ -1,0 +1,121 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- Author: Alexandre -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template/main.xhtml">
+        <ui:define name="windowTitle">
+            #{bundle.Page_Payment}
+        </ui:define>
+        <ui:define name="content">
+            <div class="well well-lg whiteWell">
+            <header class="clearfix">
+                <h1 class = "text-center well well-sm">#{bundle.Invoce_invoice} #{paymentBackBean.invoiceNumber}</h1>
+              <div id="company" class="clearfix">
+                <div>PACMABOOKS</div>
+                <div>3040 Rue Sherbrooke O, Montréal<br />H3Z 1A4, QC, CA</div>
+                <div>(514)-555-5555</div>
+                <div><a href="mailto:g5w16pacmabooks@gmail.com">g5w16pacmabooks@gmail.com</a></div>
+              </div>
+              <div id="project">
+                  <div><span>#{bundle.Inovice_client}</span>#{authenticationBackingBean.client.firstName} #{client.lastName}</div>
+                  <div><span>#{bundle.Invoice_address}</span>#{authenticationBackingBean.client.address1}</div>
+                  <div><span>#{bundle.Invoice_email}</span>#{authenticationBackingBean.client.email}</div>
+                  <div><span>#{bundle.Invoice_date}</span>#{paymentBackBean.date.toLocalDate()}</div>
+              </div>
+            </header>
+                <br/>
+            <table id="cart" class="table table-responsive table-striped">
+                <thead>
+                    <tr>
+                        <th>#{bundle.Cart_Product}</th>
+                        <th>#{bundle.Cart_Quantity}</th>
+                        <th></th>
+                        <th>#{bundle.Cart_Price}</th>
+                        <th>#{bundle.Cart_Total}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ui:fragment rendered="#{!paymentBackBean.isInvoiceEmpty()}">
+                        <ui:repeat varStatus="status" value="#{paymentBackBean.products}" var="Product">
+                            <tr>
+                                <td class="col-md-6">
+                                    <div class="media">
+                                        <h:form>
+                                            <h:commandLink action="#{product.show(Product.book.isbn)}" styleClass="thumbnail pull-left">
+                                                <h:graphicImage styleClass="media-object" value="/resources/img/covers/#{Product.book.isbn}.jpg" style="max-height: 100px; width: auto; height: auto;"/>
+                                            </h:commandLink>
+                                        </h:form>
+                                        <div class="media-body">
+                                            <h4 class="media-heading"><a href="#">#{Product.book.title}</a></h4>
+                                            <h5 class="media-heading"> #{bundle.Cart_By} <a href="#">#{Product.book.author}</a></h5>
+                                            <span>#{bundle.Cart_Status} </span><span class="text-success"><strong>#{bundle.Cart_Available} #{Product.book.formats}</strong></span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="col-md-1" style="text-align: center">     
+                                    <h:inputText value="1" styleClass="form-control" id = "quantity" disabled="true">
+                                    </h:inputText>
+                                </td>
+                                <td class="col-md-2"></td>
+                                <td class="col-md-3"><strong>$#{Product.getPriceProduct()}</strong></td>
+
+                                <td class="col-md-2"><strong>$#{Product.priceProduct}</strong></td>
+
+                            </tr>
+                        </ui:repeat>
+                    <tr>
+                        <td>   </td>
+                        <td>   </td>
+                        <td>   </td>
+                        <td><h5><strong>#{bundle.Cart_Subtotal}</strong></h5></td>
+                        <td class="text-right"><h5><strong>$#{shoppingCart.priceTotal}</strong></h5></td>
+                    </tr>
+                    <tr>
+                        <td>   </td>
+                        <td>   </td>
+                        <td>   </td>
+                        <td><h5>GST</h5></td>
+                        <td class="text-right"><h5>$#{shoppingCart.gst}</h5></td>
+                    </tr>
+                    <tr>
+                        <td>   </td>
+                        <td>   </td>
+                        <td>   </td>
+                        <td><h5>HST</h5></td>
+                        <td class="text-right"><h5>$#{shoppingCart.hst}</h5></td>
+                    </tr>
+                    <tr>
+                        <td>   </td>
+                        <td>   </td>
+                        <td>   </td>
+                        <td><h5>PST</h5></td>
+                        <td class="text-right"><h5>$#{shoppingCart.pst}</h5></td>
+                    </tr>
+                    <tr>
+                        <td>
+                        </td>
+                        <td>   </td>
+                        <td>   </td>
+                        <td><h5><strong>Total tax</strong></h5></td>
+                        <td class="text-right"><strong><h5>$#{shoppingCart.tax}</h5></strong></td>
+                    </tr>
+                    <tr>
+                        <td>   </td>
+                        <td>   </td>
+                        <td>   </td>
+                        <td><strong><h:outputText value ="Total"/></strong></td>
+                        <td class="text-right"><strong><h5>$#{shoppingCart.total}</h5></strong></td>
+                    </tr>
+                    #{shoppingCart.emptyCart()}
+                    </ui:fragment>
+                </tbody>
+            </table>
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>

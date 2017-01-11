@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- Author: Michael -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template/main.xhtml">
+        <ui:define name="windowTitle">
+            #{bundle.Download_download}
+        </ui:define>
+        <ui:define name="content">
+            <div class="well well-lg whiteWell">
+            <header class="clearfix">
+                <h1 class = "text-center well well-sm">#{bundle.Download_downloads}</h1>
+            </header>
+                <br/>
+            <table id="cart" class="table table-responsive table-striped">
+                <thead>
+                    <tr>
+                        <th>#{bundle.Cart_Product}</th>
+                        <th>#{bundle.Download_downloads}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ui:fragment>
+                        <ui:repeat rendered="#{!downloadsBackingBean.isEmpty()}" varStatus="status" value="#{downloadsBackingBean.books}" var="Book">
+                            <tr>
+                                <td class="col-md-6">
+                                    <div class="media">
+                                        <h:form>
+                                            <h:commandLink action="#{product.show(Book.isbn)}" styleClass="thumbnail pull-left">
+                                                <h:graphicImage styleClass="media-object" value="/resources/img/covers/#{Book.isbn}.jpg" style="max-height: 100px; width: auto; height: auto;"/>
+                                            </h:commandLink>
+                                        </h:form>
+                                        <div class="media-body">
+                                            <h4 class="media-heading"><a href="#">#{Book.title}</a></h4>
+                                            <h5 class="media-heading"> #{bundle.Cart_By} <a href="#">#{Book.author}</a></h5>
+                                            <span>#{bundle.Cart_Status} </span><span class="text-success"><strong>#{bundle.Cart_Available} #{Book.formats}</strong></span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="col-md-2">
+                                    <p:dialog modal="true" widgetVar="statusDialog" header="Status" draggable="false" closable="false" resizable="false">
+                                        <p:graphicImage  value="/resources/images/progress_bar.gif" />
+                                    </p:dialog>
+                                    <h:form>
+                                        <p:selectOneMenu value = "#{downloadsBackingBean.currentFormat}" class="text-center">
+                                            <f:selectItems value="#{Book.formats}"/>
+                                            <p:ajax update= "download"  />
+                                        </p:selectOneMenu>
+                                        <br/>
+                                        <p:commandButton id = "download" value="#{bundle.Download_download}" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" icon="ui-icon-arrowthick-1-s">
+                                            <p:fileDownload value="#{fileDownload.createFile(Book.title, downloadsBackingBean.currentFormat, Book.formats.get(0))}" />
+                                        </p:commandButton>
+                                    </h:form>
+
+                                    <script type="text/javascript">
+                                    function start() {
+                                        PF('statusDialog').show();
+                                    }
+
+                                    function stop() {
+                                        PF('statusDialog').hide();
+                                    }
+                                    </script>
+                                </td>
+                            </tr>
+                        </ui:repeat>
+                    </ui:fragment>
+                </tbody>
+            </table>
+                    <ui:fragment rendered="#{downloadsBackingBean.isEmpty()}">
+                        <h4 class="text-center"><strong>#{bundle.Download_none}</strong></h4>
+                    </ui:fragment>
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>

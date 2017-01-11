@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- Author: Philip -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template/management.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListDetailsTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form id="main" styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{bundle.ListDetailsEmpty}" rendered="#{detailsAction.items.rowCount == 0}"/>
+                <p:dataTable id="datalist" value="#{detailsAction.items}" var="item" widgetVar="table"
+                             paginator="true"
+                             rowKey="#{item.id}" rowIndexVar="rowId"
+                             rows="20"
+                             rowsPerPageTemplate="5,10,20,30,40,50" >
+                    <f:facet name="header">
+                        <p:outputPanel style="text-align: right;">
+                            <h:outputText value="#{bundle.SearchTitle}" />
+                            <p:inputText id="globalFilter" onkeyup="PF('table').filter()" style="width:150px" placeholder="#{bundle.SearchQuery}"/>
+                        </p:outputPanel>
+                    </f:facet>
+                    <p:column headerText="#{bundle.ListDetailsTitle_id}" sortBy="#{item.id}" filterBy="#{item.id}" filterMatchMode="contains" style="width:8em;">
+                        <h:outputText value="#{item.id}"/>
+                    </p:column>
+                    <p:column headerText="#{bundle.ListDetailsTitle_price}" sortBy="#{item.price}" filterBy="#{item.price}" filterMatchMode="contains">
+                        <h:outputText value="#{item.price}"/>
+                    </p:column>
+                    <p:column headerText="#{bundle.ListDetailsTitle_pst}" sortBy="#{item.pst}" filterBy="#{item.pst}" filterMatchMode="contains">
+                        <h:outputText value="#{item.pst}"/>
+                    </p:column>
+                    <p:column headerText="#{bundle.ListDetailsTitle_gst}" sortBy="#{item.gst}" filterBy="#{item.gst}" filterMatchMode="contains">
+                        <h:outputText value="#{item.gst}"/>
+                    </p:column>
+                    <p:column headerText="#{bundle.ListDetailsTitle_hst}" sortBy="#{item.hst}" filterBy="#{item.hst}" filterMatchMode="contains">
+                        <h:outputText value="#{item.hst}"/>
+                    </p:column>
+                    <p:column headerText="#{bundle.ListDetailsTitle_invoiceId}" sortBy="#{item.invoiceId}" filterBy="#{item.invoiceId}" filterMatchMode="contains" style="width:9em;">
+                        <h:outputText value="#{item.invoiceId.id}"/>
+                    </p:column>
+                    <p:column headerText="#{bundle.ListDetailsTitle_isbn}" sortBy="#{item.isbn}" filterBy="#{item.isbn}" filterMatchMode="contains">
+                        <h:outputText value="#{item.isbn.isbn}"/>
+                    </p:column>
+                    <p:column headerText="#{bundle.ListBooksTitle_dateRemoved}" sortBy="#{item.dateRemoved}" filterBy="#{item.dateRemoved}" filterMatchMode="contains" style="width:12em;">
+                        <h:outputText value="#{item.dateRemoved}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                    </p:column>
+                    <p:column style="width:9em;">
+                        <f:facet name="header">
+                            <h:outputText value="&nbsp;"/>
+                        </f:facet>
+                        <h:commandLink action="#{detailsAction.prepareView(item)}" value="#{bundle.ListDetailsViewLink}"/>
+                        <h:outputText value=" "/>
+                        <h:commandLink action="#{detailsAction.prepareEdit(item)}" value="#{bundle.ListDetailsEditLink}"/>
+                        <h:outputText value=" "/>
+                        <p:commandLink action="#{detailsAction.remove(item)}" value="#{bundle.ListDetailsDestroyLink}" update=":main" rendered="#{item.dateRemoved == null}" />
+                    </p:column>
+                </p:dataTable>
+                <br />
+                <p:commandButton action="#{invoicesAction.forceList}" value="#{bundle.EditInvoicesShowAllLink}" ajax="false"/>
+                <br />
+                <br />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

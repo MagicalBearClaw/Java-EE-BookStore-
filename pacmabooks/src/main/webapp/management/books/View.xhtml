@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- Author: Philip -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template/management.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewBooksTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:outputStylesheet name="view.css" library="css" />
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="3">
+                    <h:panelGrid columns="2">
+                        <h:outputText value="#{bundle.ViewBooksLabel_isbn}" style="font-weight:bold"/>
+                        <h:outputText value="#{booksAction.current.isbn}" title="#{bundle.ViewBooksTitle_isbn}"/>
+                        <h:outputText value="#{bundle.ViewBooksLabel_title}" style="font-weight:bold"/>
+                        <h:outputText value="#{booksAction.current.title}" title="#{bundle.ViewBooksTitle_title}"/>
+                        <h:outputText value="#{bundle.ViewBooksLabel_author}" style="font-weight:bold"/>
+                        <h:outputText value="#{booksAction.current.author}" title="#{bundle.ViewBooksTitle_author}"/>
+                        <h:outputText value="#{bundle.ViewBooksLabel_publisher}" style="font-weight:bold"/>
+                        <h:outputText value="#{booksAction.current.publisher}" title="#{bundle.ViewBooksTitle_publisher}"/>
+                        <h:outputText value="#{bundle.ViewBooksLabel_pages}" style="font-weight:bold"/>
+                        <h:outputText value="#{booksAction.current.pages}" title="#{bundle.ViewBooksTitle_pages}"/>
+                        <h:outputText value="#{bundle.ViewBooksLabel_genre}" style="font-weight:bold"/>
+                        <h:outputText value="#{booksAction.current.genre}" title="#{bundle.ViewBooksTitle_genre}"/>
+                        <h:outputText value="#{bundle.ViewBooksLabel_formats}" style="font-weight:bold"/>
+                        <h:outputText value="#{booksAction.current.formats}" title="#{bundle.ViewBooksTitle_formats}"/>
+                        <h:outputText value="#{bundle.ViewBooksLabel_wholesalePrice}" style="font-weight:bold"/>
+                        <h:outputText value="#{booksAction.current.wholesalePrice}" title="#{bundle.ViewBooksTitle_wholesalePrice}"/>
+                        <h:outputText value="#{bundle.ViewBooksLabel_listPrice}" style="font-weight:bold"/>
+                        <h:outputText value="#{booksAction.current.listPrice}" title="#{bundle.ViewBooksTitle_listPrice}"/>
+                        <h:outputText value="#{bundle.ViewBooksLabel_salePrice}" style="font-weight:bold"/>
+                        <h:outputText value="#{booksAction.current.salePrice}" title="#{bundle.ViewBooksTitle_salePrice}"/>
+                        <h:outputText value="#{bundle.ViewBooksLabel_fileSize}" style="font-weight:bold"/>
+                        <h:outputText value="#{booksAction.current.fileSize}" title="#{bundle.ViewBooksTitle_fileSize}"/>
+                        <h:outputText value="#{bundle.ViewBooksLabel_datePublished}" style="font-weight:bold"/>
+                        <h:outputText value="#{booksAction.current.datePublished}" title="#{bundle.ViewBooksTitle_datePublished}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewBooksLabel_dateReceived}" style="font-weight:bold"/>
+                        <h:outputText value="#{booksAction.current.dateReceived}" title="#{bundle.ViewBooksTitle_dateReceived}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewBooksLabel_dateRemoved}" style="font-weight:bold"/>
+                        <h:outputText value="#{booksAction.current.dateRemoved}" title="#{bundle.ViewBooksTitle_dateRemoved}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                    </h:panelGrid>
+                    <h:panelGrid columns="1">
+                        <h:outputText value="#{bundle.ViewBooksLabel_description}" style="font-weight:bold"/>
+                        <h:outputText value="#{booksAction.current.description}" title="#{bundle.ViewBooksTitle_description}" class="smallFont"/>
+                        <br />
+                        <h:outputText value="#{bundle.ViewBooksTitle_numSales}" style="font-weight:bold"/>
+                        <h:outputText value="#{booksAction.numSales}" title="#{bundle.ViewBooksTitle_numSales}" class="smallFont"/>
+                    </h:panelGrid>
+                    <h:panelGrid columns="1">
+                        <h:graphicImage style="display: block; min-height: 500px; max-width:450px; max-height:600px; width: auto" styleClass="img-responsive img-center" value="/resources/img/covers/#{booksAction.current.isbn}.jpg" alt="#{booksAction.current.title} Cover Image"/>
+                    </h:panelGrid>
+                </h:panelGrid>
+                <br />
+                <p:button outcome="Edit" value="#{bundle.ViewBooksEditLink}"/>
+                &nbsp;
+                <p:commandButton action="#{booksAction.prepareCreate}" value="#{bundle.ViewBooksCreateLink}" ajax="false" />
+                &nbsp;
+                <p:commandButton action="#{booksAction.prepareList}" value="#{bundle.ViewBooksShowAllLink}" ajax="false" />
+                <br />
+                <br />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

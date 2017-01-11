@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- Author: Philip -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template/management.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditInvoicesTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form id="main">
+                <h:panelGrid columns="2">
+                    <p:outputLabel value="#{bundle.EditInvoicesLabel_id}" for="id" />
+                    <p:inputText id="id" value="#{invoicesAction.current.id}" title="#{bundle.EditInvoicesTitle_id}" required="true" requiredMessage="#{bundle.EditInvoicesRequiredMessage_id}"/>
+                    <p:outputLabel value="#{bundle.EditInvoicesLabel_saleDate}" for="saleDate" />
+                    <p:calendar id="saleDate" pattern="MM/dd/yyyy" value="#{invoicesAction.current.saleDate}" title="#{bundle.EditInvoicesTitle_saleDate}" required="true" requiredMessage="#{bundle.EditInvoicesRequiredMessage_saleDate}" />
+                    <p:outputLabel value="#{bundle.EditInvoicesLabel_netValue}" for="netValue" />
+                    <p:inputText id="netValue" value="#{invoicesAction.current.netValue}" title="#{bundle.EditInvoicesTitle_netValue}" required="true" requiredMessage="#{bundle.EditInvoicesRequiredMessage_netValue}"/>
+                    <p:outputLabel value="#{bundle.EditInvoicesLabel_grossValue}" for="grossValue" />
+                    <p:inputText id="grossValue" value="#{invoicesAction.current.grossValue}" title="#{bundle.EditInvoicesTitle_grossValue}" required="true" requiredMessage="#{bundle.EditInvoicesRequiredMessage_grossValue}"/>
+                    <p:outputLabel value="#{bundle.EditBooksLabel_dateRemoved}" for="dateRemoved" />
+                    <p:calendar id="dateRemoved" value="#{invoicesAction.current.dateRemoved}" pattern="dd/MM/yyyy"/>
+                </h:panelGrid>
+                <p:commandButton action="#{invoicesAction.update}" value="#{bundle.EditInvoicesSaveLink}" update=":main :messagePanel" icon="ui-icon-disk" />
+                &nbsp;
+                <p:commandButton action="#{invoicesAction.prepareView}" value="#{bundle.EditInvoicesViewLink}" ajax="false" />
+                <br />
+                <br />
+                <p:commandButton action="#{invoicesAction.prepareList}" value="#{bundle.EditInvoicesShowAllLink}" immediate="true" ajax="false" />
+                <br />
+                <br />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>
