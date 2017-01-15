@@ -17,7 +17,7 @@ helped with other memebers work when needed.
 
 here are some screenshots of the site.
 
-![Alt text](https://gyazo.com/24af760f01d1f409593102b54000ab82 "front page")
+![Alt text](https://i.gyazo.com/24af760f01d1f409593102b54000ab82.png "front page")
 
 ![Alt text](https://gyazo.com/948b739d478f5ece1b21efc6a456e81b "book page")
 
