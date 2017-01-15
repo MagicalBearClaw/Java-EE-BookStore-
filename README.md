@@ -19,15 +19,15 @@ here are some screenshots of the site.
 
 ![Alt text](https://i.gyazo.com/24af760f01d1f409593102b54000ab82.png "front page")
 
-![Alt text](https://gyazo.com/948b739d478f5ece1b21efc6a456e81b "book page")
+![Alt text](https://i.gyazo.com/948b739d478f5ece1b21efc6a456e81b.png  "book page")
 
-![Alt text](https://gyazo.com/5ea8fcef6123fb0bc4915ecd25b3e3ff "cart page")
+![Alt text](https://i.gyazo.com/5ea8fcef6123fb0bc4915ecd25b3e3ff.png  "cart page")
 
-![Alt text](https://gyazo.com/199e078828b44001b55baaf1f9843d57 "payment page")
+![Alt text](https://i.gyazo.com/199e078828b44001b55baaf1f9843d57.png  "payment page")
 
-![Alt text](https://gyazo.com/ac2eee9fc2789cb73d9f6844e9d4ac4a "invoice page")
+![Alt text](https://i.gyazo.com/ac2eee9fc2789cb73d9f6844e9d4ac4a.png  "invoice page")
 
-![Alt text](https://gyazo.com/948b739d478f5ece1b21efc6a456e81b "book page")
+![Alt text](https://i.gyazo.com/948b739d478f5ece1b21efc6a456e81b.png  "book page")
 
-![Alt text](https://gyazo.com/2f875b0a29674f67b5f44739e3830437 "download page")
+![Alt text](https://i.gyazo.com/2f875b0a29674f67b5f44739e3830437.png  "download page")
 
